@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-/* import { useHistory }  */
 
 export default function Login() {
   const history = useHistory();
@@ -14,7 +13,6 @@ export default function Login() {
       const PASSWORD_MIN_LENGTH = 6;
       const isEmailValid = emailRegex.test(email);
       const isPasswordValid = password.length > PASSWORD_MIN_LENGTH;
-      console.log('Checando');
       if (isEmailValid && isPasswordValid) {
         setIsDisabled(false);
       } else {
@@ -29,7 +27,6 @@ export default function Login() {
     localStorage.setItem('user', JSON.stringify({ email }));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
-    localStorage.setItem('easterEgg', 'muhahahahaha');
     history.push('/foods');
   };
 
