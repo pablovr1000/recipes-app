@@ -8,19 +8,15 @@ export default function Login() {
   const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
-    const validateLogin = () => {
-      const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-      const PASSWORD_MIN_LENGTH = 6;
-      const isEmailValid = emailRegex.test(email);
-      const isPasswordValid = password.length > PASSWORD_MIN_LENGTH;
-      if (isEmailValid && isPasswordValid) {
-        setIsDisabled(false);
-      } else {
-        setIsDisabled(true);
-      }
-    };
-
-    validateLogin();
+    const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+    const PASSWORD_MIN_LENGTH = 6;
+    const isEmailValid = emailRegex.test(email);
+    const isPasswordValid = password.length > PASSWORD_MIN_LENGTH;
+    if (isEmailValid && isPasswordValid) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   }, [email, password]);
 
   const handleSubmit = () => {
