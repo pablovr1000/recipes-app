@@ -1,7 +1,11 @@
 import React from 'react';
+import Header from '../../components/Header/Header';
 
 export default function Nationalities() {
   return (
-    <div>Nationalities</div>
+    <>
+      <Header />
+      <div>Nationalities</div>
+    </>
   );
 }
