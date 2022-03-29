@@ -18,6 +18,7 @@ export default function Login() {
           name="password"
           type="password"
           data-testid="password-input"
+          value={ password }
         />
         <button
           className="buttonLogin"
