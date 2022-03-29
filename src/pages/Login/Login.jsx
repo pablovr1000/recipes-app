@@ -11,6 +11,7 @@ export default function Login() {
           type="email"
           data-testid="email-input"
           placeholder="email"
+          value={ email }
         />
         <input
           className="inputPassword"
