@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+/* import { useHistory }  */
 
 export default function Login() {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
@@ -21,6 +24,14 @@ export default function Login() {
 
     validateLogin();
   }, [email, password]);
+
+  const handleSubmit = () => {
+    localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('easterEgg', 'muhahahahaha');
+    history.push('/foods');
+  };
 
   return (
     <div className="containerLogin">
@@ -47,6 +58,7 @@ export default function Login() {
           className="buttonLogin"
           data-testid="login-submit-btn"
           type="button"
+          onClick={ handleSubmit }
           disabled={ isDisabled }
         >
           Enter
