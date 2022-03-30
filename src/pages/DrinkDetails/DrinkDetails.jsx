@@ -1,16 +1,17 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import RecipeDetails from '../../components/RecipeDetails/RecipeDetails';
 
-export default function DrinkDetails() {
-  const history = useHistory();
-
-  console.log(history);
+export default function DrinkDetails({ match }) {
   return (
     <>
       <div>DrinkDetails</div>
-      <RecipeDetails />
+      <RecipeDetails id={ match.params.id } index="0" />
     </>
   );
 }
+
+DrinkDetails.propTypes = {
+  match: PropTypes.shape({ params: PropTypes.shape({ id: Number }) }),
+}.isRequired;
