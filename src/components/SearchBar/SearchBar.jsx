@@ -21,7 +21,6 @@ export default function SearchBar() {
     }
 
     if (recipeResults.length === 1) {
-      console.log('entrou');
       setRedirectToId(recipeResults[0].idMeal || recipeResults[0].idDrink);
     }
   }, [recipeResults]);
@@ -54,7 +53,7 @@ export default function SearchBar() {
           type="text"
           data-testid="search-input"
           onChange={ handleChangeInputSearch }
-          value={ searchOptions.input }
+          value={ searchOptions.search }
         />
         <label htmlFor="ingredient-search">
           <input
