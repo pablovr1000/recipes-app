@@ -25,3 +25,16 @@ export const getDrinkDetails = async (id) => {
   const { drinks } = await response.json();
   return drinks[0];
 };
+
+export const getRecommendation = async (page) => {
+  if (page === 'foods') {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const { drinks } = await response.json();
+    return drinks.splice(0, 2);
+  }
+  if (page === 'drinks') {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const { meals } = await response.json();
+    return meals.splice(0, 2);
+  }
+};

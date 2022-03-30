@@ -7,7 +7,7 @@ export default function DrinkDetails({ match }) {
   return (
     <>
       <div>DrinkDetails</div>
-      <RecipeDetails id={ match.params.id } index="0" />
+      <RecipeDetails id={ match.params.id } />
     </>
   );
 }

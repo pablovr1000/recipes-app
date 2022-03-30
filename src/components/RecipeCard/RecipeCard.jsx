@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function RecipeCard({ recipeName, recipeImg, recipeIndex }) {
+export default function RecipeCard({ type, recipeName, recipeImg, recipeIndex }) {
   return (
-    <div data-testid={ `${recipeIndex}-recipe-card` }>
+    <div
+      data-testid={
+        type ? `${recipeIndex}-recomendation-card` : `${recipeIndex}-recipe-card`
+      }
+    >
       <img
         data-testid={ `${recipeIndex}-card-img` }
         src={ recipeImg }
