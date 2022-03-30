@@ -11,8 +11,8 @@ function App() {
       <Route exact path="/drinks" component={ pages.Drinks } />
       <Route exact path="/foods/:id" component={ pages.FoodDetails } />
       <Route exact path="/drinks/:id" component={ pages.DrinkDetails } />
-      <Route exact path="/drinks/:id/in-progress" component={ pages.DrinksInProgress } />
       <Route exact path="/foods/:id/in-progress" component={ pages.FoodsInProgress } />
+      <Route exact path="/drinks/:id/in-progress" component={ pages.DrinksInProgress } />
       <Route exact path="/explore" component={ pages.Explore } />
       <Route exact path="/explore/foods" component={ pages.ExploreFoods } />
       <Route exact path="/explore/drinks" component={ pages.ExploreDrinks } />
