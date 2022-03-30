@@ -2,20 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
-
-const headerTitles = {
-  foods: 'Foods',
-  drinks: 'Drinks',
-  explore: 'Explore',
-  explore_foods: 'Explore Foods',
-  explore_drinks: 'Explore Drinks',
-  explore_foods_ingredients: 'Explore Ingredients',
-  explore_drinks_ingredients: 'Explore Ingredients',
-  explore_foods_nationalities: 'Explore Nationalities',
-  done_recipes: 'Done Recipes',
-  favorite_recipes: 'Favorite Recipes',
-  profile: 'Profile',
-};
+import { headerTitles } from '../../utils/constants';
+import SearchBar from '../SearchBar/SearchBar';
 
 export default function Header() {
   const [isSearchBarBtnVisible, setIsSearchBarBtnVisible] = useState(false);
@@ -73,7 +61,7 @@ export default function Header() {
       )
       }
       {
-        isBloomClicked && <input data-testid="search-input" type="text" />
+        isBloomClicked && <SearchBar />
       }
     </header>
   );
