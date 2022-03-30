@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import recipesContext from '../../context/recipesContext';
-// import SearchBar from '../../components/SearchBar/SearchBar';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import { RECIPES_RENDER_QUANTITY } from '../../utils/constants';
 import Header from '../../components/Header/Header';
