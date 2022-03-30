@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './RecipeCard.scss';
+
 export default function RecipeCard({ type, recipeName, recipeImg, recipeIndex }) {
   return (
     <div
+      className="recipe-card-container"
       data-testid={
         type ? `${recipeIndex}-recomendation-card` : `${recipeIndex}-recipe-card`
       }

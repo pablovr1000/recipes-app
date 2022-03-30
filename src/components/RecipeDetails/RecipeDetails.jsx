@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getRecommendation, getFoodDetails, getDrinkDetails } from '../../services/API';
 import RecipeCard from '../RecipeCard/RecipeCard';
+import './RecipeDetails.scss';
 
 export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
   const [recipeToRender, setRecipeToRender] = useState({});
@@ -84,18 +85,20 @@ export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
         src={ recipeToRender.strYoutube.replace('/watch?v=', '/embed/') }
         title="YouTube video player"
       />}
-      {
-        recommendation.map((recipe, index) => (
-          <RecipeCard
-            key={ recipe.idMeal || recipe.idDrink }
-            type="recommendation"
-            recipeName={ recipe.strMeal || recipe.strDrink }
-            recipeImg={ recipe.strMealThumb || recipe.strDrinkThumb }
-            recipeIndex={ index }
-          />
-
-        ))
-      }
+      <div
+        className="recommendation-container"
+      >
+        {
+          recommendation.map((recipe, index) => (
+            <RecipeCard
+              key={ recipe.idMeal || recipe.idDrink }
+              type="recommendation"
+              recipeName={ recipe.strMeal || recipe.strCategory }
+              recipeImg={ recipe.strMealThumb || recipe.strDrinkThumb }
+              recipeIndex={ index }
+            />))
+        }
+      </div>
       <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
     </div>
   );

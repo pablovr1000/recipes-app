@@ -1,3 +1,5 @@
+import { RECOMMENDATION_RENDER_QUANTITY } from '../utils/constants';
+
 export const getFoods = async (search, option) => {
   const searchOrFilter = option === 'i' ? 'filter' : 'search';
 
@@ -30,11 +32,11 @@ export const getRecommendation = async (page) => {
   if (page === 'foods') {
     const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     const { drinks } = await response.json();
-    return drinks.splice(0, 2);
+    return drinks.splice(0, RECOMMENDATION_RENDER_QUANTITY);
   }
   if (page === 'drinks') {
     const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const { meals } = await response.json();
-    return meals.splice(0, 2);
+    return meals.splice(0, RECOMMENDATION_RENDER_QUANTITY);
   }
 };
