@@ -16,7 +16,13 @@ export default function RecipeCard({ type, recipeName, recipeImg, recipeIndex })
         src={ recipeImg }
         alt={ recipeName }
       />
-      <p data-testid={ `${recipeIndex}-card-name` }>{recipeName}</p>
+      <p
+        data-testid={
+          type ? `${recipeIndex}-recomendation-title` : `${recipeIndex}-card-name`
+        }
+      >
+        {recipeName}
+      </p>
     </div>
   );
 }

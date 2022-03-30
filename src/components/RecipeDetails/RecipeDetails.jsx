@@ -17,6 +17,7 @@ export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
   useEffect(() => {
     (async () => {
       const currentRecommendation = await getRecommendation(page);
+      console.log(page);
       setRecommendation(currentRecommendation);
     })();
   }, [page, recipeToRender]);
@@ -93,13 +94,19 @@ export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
             <RecipeCard
               key={ recipe.idMeal || recipe.idDrink }
               type="recommendation"
-              recipeName={ recipe.strMeal || recipe.strCategory }
+              recipeName={ recipe.strMeal || recipe.strDrink }
               recipeImg={ recipe.strMealThumb || recipe.strDrinkThumb }
               recipeIndex={ index }
             />))
         }
       </div>
-      <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+      <button
+        className="startRecipeBtn"
+        type="button"
+        data-testid="start-recipe-btn"
+      >
+        Start Recipe
+      </button>
     </div>
   );
 }
