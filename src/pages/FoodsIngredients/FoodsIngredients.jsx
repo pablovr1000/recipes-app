@@ -5,7 +5,7 @@ export default function FoodsIngredients() {
   return (
     <>
       <Header />
-      <div>Explore Foods ERRADO</div>
+      <div>Explore Foods</div>
     </>
   );
 }
