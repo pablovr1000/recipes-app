@@ -4,6 +4,7 @@ import recipesContext from '../../context/recipesContext';
 // import SearchBar from '../../components/SearchBar/SearchBar';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import { RECIPES_RENDER_QUANTITY } from '../../utils/constants';
+import Header from '../../components/Header/Header';
 
 export default function Drinks() {
   const { recipeResults } = useContext(recipesContext);
@@ -17,6 +18,7 @@ export default function Drinks() {
 
   return (
     <>
+      <Header />
       <div>Drinks</div>
       { recipesToRender.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
         <RecipeCard
