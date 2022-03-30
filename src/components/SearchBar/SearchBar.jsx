@@ -2,18 +2,29 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import recipesContext from '../../context/recipesContext';
-import { getFoods, getDrinks } from '../../services/API';
 import { INITIAL_SEARCH_OPTIONS } from '../../utils/constants';
 
 export default function SearchBar() {
   const [searchOptions, setSearchOptions] = useState(INITIAL_SEARCH_OPTIONS);
   const [currentPage, setCurrentPage] = useState('');
   const [redirectToId, setRedirectToId] = useState('');
-  const { setSearchResults } = useContext(recipesContext);
+  const { recipeResults, getRecipes } = useContext(recipesContext);
 
   useEffect(() => {
     setCurrentPage(window.location.href.split('/').pop());
   }, []);
+
+  useEffect(() => {
+    if (!recipeResults) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      return;
+    }
+
+    if (recipeResults.length === 1) {
+      console.log('entrou');
+      setRedirectToId(recipeResults[0].idMeal || recipeResults[0].idDrink);
+    }
+  }, [recipeResults]);
 
   const handleChangeInputSearch = ({ target }) => {
     setSearchOptions({ ...searchOptions, search: target.value });
@@ -32,27 +43,13 @@ export default function SearchBar() {
       return;
     }
 
-    let data = [];
-    if (currentPage === 'foods') data = await getFoods(search, option);
-    if (currentPage === 'drinks') data = await getDrinks(search, option);
-
-    if (!data) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-      return;
-    }
-
-    if (data.length === 1) {
-      setRedirectToId(data[0].idMeal || data[0].idDrink);
-    }
-
-    setSearchResults(data);
+    getRecipes(currentPage, search, option);
   };
 
   return (
     <>
       { redirectToId && <Redirect to={ `/${currentPage}/${redirectToId}` } /> }
       <form onSubmit={ handleSubmit }>
-        <button type="button" data-testid="search-top-btn">button</button>
         <input
           type="text"
           data-testid="search-input"
