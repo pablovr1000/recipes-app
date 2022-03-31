@@ -1,18 +1,22 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-
 import recipesContext from '../../context/recipesContext';
 import { INITIAL_SEARCH_OPTIONS } from '../../utils/constants';
 
 export default function SearchBar() {
   const [searchOptions, setSearchOptions] = useState(INITIAL_SEARCH_OPTIONS);
-  const [currentPage, setCurrentPage] = useState('');
   const [redirectToId, setRedirectToId] = useState('');
-  const { recipeResults, getRecipes } = useContext(recipesContext);
+  const {
+    recipeResults,
+    getRecipes,
+    currentPage,
+    setCurrentPage,
+    setIsSearchBarInputClicked,
+  } = useContext(recipesContext);
 
   useEffect(() => {
     setCurrentPage(window.location.href.split('/').pop());
-  }, []);
+  }, [setCurrentPage]);
 
   useEffect(() => {
     if (!recipeResults) {
@@ -21,7 +25,6 @@ export default function SearchBar() {
     }
 
     if (recipeResults.length === 1) {
-      console.log('entrou');
       setRedirectToId(recipeResults[0].idMeal || recipeResults[0].idDrink);
     }
   }, [recipeResults]);
@@ -36,6 +39,7 @@ export default function SearchBar() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSearchBarInputClicked(true);
     const { search, option } = searchOptions;
 
     if (option === 'f' && search.length !== 1) {
@@ -54,7 +58,7 @@ export default function SearchBar() {
           type="text"
           data-testid="search-input"
           onChange={ handleChangeInputSearch }
-          value={ searchOptions.input }
+          value={ searchOptions.search }
         />
         <label htmlFor="ingredient-search">
           <input

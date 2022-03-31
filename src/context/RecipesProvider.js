@@ -2,10 +2,20 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import recipesContext from './recipesContext';
-import { getFoods, getDrinks } from '../services/API';
+import { getFoods,
+  getDrinks,
+  getFoodByCategory,
+  getDrinkByCategory } from '../services/API';
+import { chosenMealsCategories, chosenDrinksCategories } from '../utils/constants';
 
 function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
+  const [currentPage, setCurrentPage] = useState('');
+  const [isSearchBarInputClicked, setIsSearchBarInputClicked] = useState(false);
+  const [isAnyFilterClicked, setIsAnyFilterClicked] = useState(false);
+  const [secondConditionToRender, setSecondConditionToRender] = useState(false);
+  const [foodsAndDrinksByFilter, setFoodsAndDrinksByFilter] = useState([]);
+  // const [mealAndDrinkToggle, setMealAndDrinkToggle] = useState(false);
 
   const getRecipes = async (page, search, option) => {
     let data = [];
@@ -15,8 +25,30 @@ function RecipesProvider({ children }) {
     setRecipeResults(data);
   };
 
+  const getMealsAndDrinksByFilter = async (filter) => {
+    let data = [];
+    if (chosenMealsCategories.includes(filter)) data = await getFoodByCategory(filter);
+    if (chosenDrinksCategories.includes(filter)) data = await getDrinkByCategory(filter);
+    setFoodsAndDrinksByFilter(data);
+    setIsAnyFilterClicked(true);
+    setSecondConditionToRender(true);
+  };
+
   return (
-    <recipesContext.Provider value={ { recipeResults, getRecipes } }>
+    <recipesContext.Provider
+      value={
+        { recipeResults,
+          getRecipes,
+          setCurrentPage,
+          currentPage,
+          isSearchBarInputClicked,
+          setIsSearchBarInputClicked,
+          getMealsAndDrinksByFilter,
+          secondConditionToRender,
+          isAnyFilterClicked,
+          foodsAndDrinksByFilter }
+      }
+    >
       {children}
     </recipesContext.Provider>
   );
@@ -27,3 +59,5 @@ export default RecipesProvider;
 RecipesProvider.propTypes = {
   children: PropTypes.object,
 }.isRequired;
+// if arrayFoods.includes.filter
+// if arrayDrinks.includes.filter
