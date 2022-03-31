@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getRecommendation, getFoodDetails, getDrinkDetails } from '../../services/API';
 import RecipeCard from '../RecipeCard/RecipeCard';
-import './RecipeDetails.scss';
+import './RecipeDetails.css';
 
 export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
   const [recipeToRender, setRecipeToRender] = useState({});

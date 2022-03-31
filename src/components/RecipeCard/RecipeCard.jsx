@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './RecipeCard.scss';
+import './RecipeCard.css';
 
 export default function RecipeCard({ type, recipeName, recipeImg, recipeIndex }) {
   return (
