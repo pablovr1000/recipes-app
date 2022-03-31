@@ -32,7 +32,6 @@ export const getRecommendation = async (page) => {
   if (page === 'foods') {
     const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     const { drinks } = await response.json();
-    console.log(drinks.splice(0, RECOMMENDATION_RENDER_QUANTITY));
     return drinks.splice(0, RECOMMENDATION_RENDER_QUANTITY);
   }
   if (page === 'drinks') {

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { useHistory } from 'react-router-dom';
 import { getRecommendation, getFoodDetails, getDrinkDetails } from '../../services/API';
 import RecipeCard from '../RecipeCard/RecipeCard';
-import './RecipeDetails.css';
+import './RecipeDetails.scss';
 
 export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
   const [recipeToRender, setRecipeToRender] = useState({});
@@ -11,13 +12,13 @@ export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
   const [measures, setMeasures] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
 
-  const urlPageN = -2;
-  const page = window.location.href.split('/').at(urlPageN);
+  const history = useHistory();
+
+  const page = history.location.pathname.split('/')[1];
 
   useEffect(() => {
     (async () => {
       const currentRecommendation = await getRecommendation(page);
-      console.log(page);
       setRecommendation(currentRecommendation);
     })();
   }, [page, recipeToRender]);
