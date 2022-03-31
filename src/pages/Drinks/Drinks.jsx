@@ -4,6 +4,7 @@ import recipesContext from '../../context/recipesContext';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import { RECIPES_RENDER_QUANTITY } from '../../utils/constants';
 import Header from '../../components/Header/Header';
+import Footer from '../../components/BottomMenu/Footer';
 
 export default function Drinks() {
   const { recipeResults } = useContext(recipesContext);
@@ -26,6 +27,7 @@ export default function Drinks() {
           recipeImg={ strDrinkThumb }
           recipeIndex={ index }
         />)) }
+      <Footer />
     </>
   );
 }

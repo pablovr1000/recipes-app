@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import drinkIcon from '../../images/drinkIcon.svg';
 import exploreIcon from '../../images/exploreIcon.svg';
 import mealIcon from '../../images/mealIcon.svg';
+import './footer.scss';
 
 export default function Footer() {
   return (
@@ -13,7 +14,7 @@ export default function Footer() {
         >
           <img
             src={ drinkIcon }
-            alt="profile-pic"
+            alt="drink-pic"
             data-testid="drinks-bottom-btn"
           />
         </button>
@@ -24,7 +25,7 @@ export default function Footer() {
         >
           <img
             src={ exploreIcon }
-            alt="profile-pic"
+            alt="explore-pic"
             data-testid="explore-bottom-btn"
           />
         </button>
@@ -35,7 +36,7 @@ export default function Footer() {
         >
           <img
             src={ mealIcon }
-            alt="profile-pic"
+            alt="meal-pic"
             data-testid="food-bottom-btn"
           />
         </button>
