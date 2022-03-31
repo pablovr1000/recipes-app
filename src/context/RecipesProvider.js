@@ -15,7 +15,6 @@ function RecipesProvider({ children }) {
   const [isAnyFilterClicked, setIsAnyFilterClicked] = useState(false);
   const [secondConditionToRender, setSecondConditionToRender] = useState(false);
   const [foodsAndDrinksByFilter, setFoodsAndDrinksByFilter] = useState([]);
-  // const [mealAndDrinkToggle, setMealAndDrinkToggle] = useState(false);
 
   const getRecipes = async (page, search, option) => {
     let data = [];
@@ -30,8 +29,7 @@ function RecipesProvider({ children }) {
     if (chosenMealsCategories.includes(filter)) data = await getFoodByCategory(filter);
     if (chosenDrinksCategories.includes(filter)) data = await getDrinkByCategory(filter);
     setFoodsAndDrinksByFilter(data);
-    setIsAnyFilterClicked(true);
-    setSecondConditionToRender(true);
+    setIsAnyFilterClicked((prevState) => (!prevState));
   };
 
   return (
@@ -46,7 +44,8 @@ function RecipesProvider({ children }) {
           getMealsAndDrinksByFilter,
           secondConditionToRender,
           isAnyFilterClicked,
-          foodsAndDrinksByFilter }
+          foodsAndDrinksByFilter,
+          setSecondConditionToRender }
       }
     >
       {children}
@@ -59,5 +58,3 @@ export default RecipesProvider;
 RecipesProvider.propTypes = {
   children: PropTypes.object,
 }.isRequired;
-// if arrayFoods.includes.filter
-// if arrayDrinks.includes.filter

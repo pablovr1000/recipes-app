@@ -18,8 +18,10 @@ export default function Drinks() {
     foodsAndDrinksByFilter,
     getMealsAndDrinksByFilter,
   } = useContext(recipesContext);
+
   const [recipesToRender, setRecipesToRender] = useState([]);
   const [drinksArray, setDrinksArray] = useState([]);
+
   useEffect(() => {
     const getDrinks = async () => {
       const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
@@ -60,13 +62,14 @@ export default function Drinks() {
           ))
         )
       }
-      { recipesToRender.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
-        <RecipeCard
-          key={ idDrink }
-          recipeName={ strDrink }
-          recipeImg={ strDrinkThumb }
-          recipeIndex={ index }
-        />)) }
+      { !isAnyFilterClicked && (
+        recipesToRender.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
+          <RecipeCard
+            key={ idDrink }
+            recipeName={ strDrink }
+            recipeImg={ strDrinkThumb }
+            recipeIndex={ index }
+          />))) }
       {
         !isSearchBarInputClicked && (
           drinksArray.map((el, index) => (

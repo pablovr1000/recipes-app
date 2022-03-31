@@ -16,7 +16,6 @@ export default function Foods() {
     isAnyFilterClicked,
     foodsAndDrinksByFilter,
     getMealsAndDrinksByFilter,
-    secondConditionToRender,
   } = useContext(recipesContext);
   const [foodsToRender, setFoodsToRender] = useState([]);
   const [mealsArray, setMealsArray] = useState([]);
@@ -62,15 +61,18 @@ export default function Foods() {
           ))
         )
       }
-      { foodsToRender.map(({ idMeal, strMeal, strMealThumb }, index) => (
-        <RecipeCard
-          key={ idMeal }
-          recipeName={ strMeal }
-          recipeImg={ strMealThumb }
-          recipeIndex={ index }
-        />)) }
       {
-        !isSearchBarInputClicked && !secondConditionToRender && (
+        !isAnyFilterClicked && (
+          foodsToRender.map(({ idMeal, strMeal, strMealThumb }, index) => (
+            <RecipeCard
+              key={ idMeal }
+              recipeName={ strMeal }
+              recipeImg={ strMealThumb }
+              recipeIndex={ index }
+            />)))
+      }
+      {
+        !isSearchBarInputClicked && (
           mealsArray.map(({ strMeal, strMealThumb }, index) => (
             <RecipeCard
               key={ strMeal }
