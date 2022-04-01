@@ -1,55 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { useHistory } from 'react-router-dom';
-import { getRecommendation, getFoodDetails, getDrinkDetails } from '../../services/API';
+// import recipesContext from '../../context/recipesContext';
+import { getFoodDetails, getDrinkDetails } from '../../services/API';
 import RecipeCard from '../RecipeCard/RecipeCard';
 import './RecipeDetails.scss';
 
-export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
+export default function RecipeDetails({ id, page, recommendations }) { // ID 52771 food | drinks 178319
   const [recipeToRender, setRecipeToRender] = useState({});
-  const [ingredients, setIngredients] = useState([]);
-  const [measures, setMeasures] = useState([]);
-  const [recommendation, setRecommendation] = useState([]);
-
-  const history = useHistory();
-
-  const page = history.location.pathname.split('/')[1];
-
-  useEffect(() => {
-    (async () => {
-      const currentRecommendation = await getRecommendation(page);
-      setRecommendation(currentRecommendation);
-    })();
-  }, [page, recipeToRender]);
+  // const { recommendations, setRecommendations } = useContext(recipesContext);
+  /* const [isDisabled, setIsDisabled] = useState(false); */
 
   useEffect(() => {
     (async () => {
       if (page === 'foods') {
         const food = await getFoodDetails(id);
         setRecipeToRender(food);
+        return;
       }
-      if (page === 'drinks') {
-        const drink = await getDrinkDetails(id);
-        setRecipeToRender(drink);
-      }
+      const drink = await getDrinkDetails(id);
+      setRecipeToRender(drink);
     })();
   }, [id, page]);
 
-  useEffect(() => {
-    const ingredientsList = Object.entries(recipeToRender)
+  // useMemo(async () => {
+  //   const recommendationsToRender = await getRecommendations();
+  //   setRecommendations(recommendationsToRender);
+  // }, [setRecommendations]);
+
+  const ingredientsAndMeasures = useMemo(() => {
+    const ingredients = Object.entries(recipeToRender)
       .filter(([key]) => key.includes('strIngredient'))
       .filter(([, value]) => value)
       .map(([, value]) => value);
 
-    const measureList = Object.entries(recipeToRender)
+    const measures = Object.entries(recipeToRender)
       .filter(([key]) => key.includes('strMeasure'))
       .filter(([, value]) => value)
       .map(([, value]) => value);
 
-    setIngredients(ingredientsList);
-    setMeasures(measureList);
+    return { ingredients, measures };
   }, [recipeToRender]);
+
+  /* const handleSubmit = () => {
+    const idRecipe = recipe.idMeal || recipe.idDrink;
+    localStorage.setItem('user', JSON.stringify({
+      recipe.idMeal
+    }));
+    history.push('/foods');
+  }; */
 
   return (
     <div>
@@ -70,12 +69,12 @@ export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
         {page === 'drinks' ? recipeToRender.strAlcoholic : recipeToRender.strCategory}
       </p>
       {
-        ingredients.map((ingredient, index) => (
+        ingredientsAndMeasures.ingredients.map((ingredient, index) => (
           <p
             key={ ingredient }
             data-testid={ `${index}-ingredient-name-and-measure` }
           >
-            { `${ingredient} - ${measures[index]}`}
+            { `${ingredient} - ${ingredientsAndMeasures.measures[index]}`}
           </p>
         ))
       }
@@ -90,8 +89,9 @@ export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
       <div
         className="recommendation-container"
       >
+        {console.log(page, recommendations[0])}
         {
-          recommendation.map((recipe, index) => (
+          recommendations.map((recipe, index) => (
             <RecipeCard
               key={ recipe.idMeal || recipe.idDrink }
               type="recommendation"
@@ -105,6 +105,8 @@ export default function RecipeDetails({ id }) { // ID 52771 food | drinks 178319
         className="startRecipeBtn"
         type="button"
         data-testid="start-recipe-btn"
+        /* onClick={ handleSubmit } */
+        /* disabled={ isDisabled } */
       >
         Start Recipe
       </button>

@@ -6,6 +6,7 @@ import { getFoods, getDrinks } from '../services/API';
 
 function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
+  const [recommendations, setRecommendations] = useState({});
 
   const getRecipes = async (page, search, option) => {
     let data = [];
@@ -15,8 +16,9 @@ function RecipesProvider({ children }) {
     setRecipeResults(data);
   };
 
+  const values = { recipeResults, getRecipes, recommendations, setRecommendations };
   return (
-    <recipesContext.Provider value={ { recipeResults, getRecipes } }>
+    <recipesContext.Provider value={ values }>
       {children}
     </recipesContext.Provider>
   );
