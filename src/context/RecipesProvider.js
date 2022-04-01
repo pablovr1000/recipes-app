@@ -12,8 +12,7 @@ function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
   const [currentPage, setCurrentPage] = useState('');
   const [isSearchBarInputClicked, setIsSearchBarInputClicked] = useState(false);
-  const [isAnyFilterClicked, setIsAnyFilterClicked] = useState(false);
-  const [secondConditionToRender, setSecondConditionToRender] = useState(false);
+  const [filterClicked, setFilterClicked] = useState('');
   const [foodsAndDrinksByFilter, setFoodsAndDrinksByFilter] = useState([]);
 
   const getRecipes = async (page, search, option) => {
@@ -23,13 +22,34 @@ function RecipesProvider({ children }) {
 
     setRecipeResults(data);
   };
+  const renderingConditionals = (target) => {
+    if (filterClicked === '' || filterClicked !== target.value) {
+      setFilterClicked(target.value);
+    } else {
+      setFilterClicked('');
+    }
+    // if (!target.classList.contains('selected')) {
+    //   target.parentNode.childNodes.forEach((child) => {
+    //     child.classList.remove('selected');
+    //   });
+    //   target.classList.add('selected');
+    //   setIsAnyFilterSelected(true);
+    // } else {
+    //   target.classList.remove('selected');
+    //   setIsAnyFilterSelected(false);
+    // }
+  };
 
-  const getMealsAndDrinksByFilter = async (filter) => {
+  const getMealsAndDrinksByFilter = async ({ target }) => {
     let data = [];
-    if (chosenMealsCategories.includes(filter)) data = await getFoodByCategory(filter);
-    if (chosenDrinksCategories.includes(filter)) data = await getDrinkByCategory(filter);
+    if (chosenMealsCategories.includes(target.value)) {
+      data = await getFoodByCategory(target.value);
+    }
+    if (chosenDrinksCategories.includes(target.value)) {
+      data = await getDrinkByCategory(target.value);
+    }
     setFoodsAndDrinksByFilter(data);
-    setIsAnyFilterClicked((prevState) => (!prevState));
+    renderingConditionals(target);
   };
 
   return (
@@ -42,10 +62,9 @@ function RecipesProvider({ children }) {
           isSearchBarInputClicked,
           setIsSearchBarInputClicked,
           getMealsAndDrinksByFilter,
-          secondConditionToRender,
-          isAnyFilterClicked,
+          filterClicked,
           foodsAndDrinksByFilter,
-          setSecondConditionToRender }
+          setFilterClicked }
       }
     >
       {children}

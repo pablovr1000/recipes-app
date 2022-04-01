@@ -11,9 +11,9 @@ import FoodCardsFromFilter from
 
 export default function Foods() {
   const { recipeResults,
-    // isSearchBarInputClicked,
+    isSearchBarInputClicked,
     setIsSearchBarInputClicked,
-    isAnyFilterClicked,
+    filterClicked,
     foodsAndDrinksByFilter,
     getMealsAndDrinksByFilter,
   } = useContext(recipesContext);
@@ -25,7 +25,6 @@ export default function Foods() {
       const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const { meals } = await response.json();
       setMealsArray(Object.values(meals).splice(0, RECIPES_RENDER_QUANTITY));
-      setIsSearchBarInputClicked(false);
     };
     getFoods();
   }, [setIsSearchBarInputClicked]);
@@ -39,18 +38,19 @@ export default function Foods() {
   return (
     <>
       <Header />
+      <section>
+        {
+          chosenMealsCategories.map((category) => ( // botões
+            <FilterButtons
+              key={ category }
+              stgName={ category }
+              fetchFunction={ getMealsAndDrinksByFilter }
+            />
+          ))
+        }
+      </section>
       {
-        chosenMealsCategories.map((category) => ( // botões
-          <FilterButtons
-            key={ category }
-            stgName={ category }
-            fetchFunction={ getMealsAndDrinksByFilter }
-          />
-        ))
-      }
-      <h1>Foods</h1>
-      {
-        isAnyFilterClicked && (
+        filterClicked && (
           foodsAndDrinksByFilter.map(({ strMeal, idMeal, strMealThumb }, index) => ( // array que vem do clique do filtro
             <FoodCardsFromFilter
               mealId={ index }
@@ -62,7 +62,7 @@ export default function Foods() {
         )
       }
       {
-        isAnyFilterClicked && (
+        isSearchBarInputClicked && (
           foodsToRender.map(({ idMeal, strMeal, strMealThumb }, index) => ( // array que vem da search bar
             <RecipeCard
               key={ idMeal }
@@ -72,7 +72,7 @@ export default function Foods() {
             />)))
       }
       {
-        !isAnyFilterClicked && (
+        (!filterClicked && !isSearchBarInputClicked) && (
           mealsArray.map(({ strMeal, strMealThumb }, index) => ( // array padrão
             <RecipeCard
               key={ strMeal }

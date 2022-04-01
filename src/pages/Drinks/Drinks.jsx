@@ -14,7 +14,7 @@ export default function Drinks() {
   const { recipeResults,
     isSearchBarInputClicked,
     setIsSearchBarInputClicked,
-    isAnyFilterClicked,
+    filterClicked,
     foodsAndDrinksByFilter,
     getMealsAndDrinksByFilter,
   } = useContext(recipesContext);
@@ -51,7 +51,7 @@ export default function Drinks() {
         ))
       }
       {
-        isAnyFilterClicked && (
+        filterClicked && (
           foodsAndDrinksByFilter.map(({ strDrink, idDrink, strDrinkThumb }, index) => (
             <DrinksCardsFromFilter
               drinkId={ index }
@@ -62,7 +62,7 @@ export default function Drinks() {
           ))
         )
       }
-      { !isAnyFilterClicked && (
+      { !filterClicked && (
         recipesToRender.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
           <RecipeCard
             key={ idDrink }

@@ -12,6 +12,8 @@ export default function SearchBar() {
     currentPage,
     setCurrentPage,
     setIsSearchBarInputClicked,
+    filterClicked,
+    setFilterClicked,
   } = useContext(recipesContext);
 
   useEffect(() => {
@@ -39,7 +41,11 @@ export default function SearchBar() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (filterClicked !== '') {
+      setFilterClicked('');
+    }
     setIsSearchBarInputClicked(true);
+
     const { search, option } = searchOptions;
 
     if (option === 'f' && search.length !== 1) {
