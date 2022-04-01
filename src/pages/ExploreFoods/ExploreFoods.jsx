@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import Footer from '../../components/BottomMenu/Footer';
 import Header from '../../components/Header/Header';
 
 export default function ExploreFoods() {
-  const [id, setID] = useState();
+  const history = useHistory();
 
   async function getIDFoodRandom() {
     const url = 'https://www.themealdb.com/api/json/v1/1/random.php';
     const response = await fetch(url);
     const data = await response.json();
-    const IdFood = (data.meals[0].idMeal);
-    setID(IdFood);
+    const id = (data.meals[0].idMeal);
+    history.push(`/foods/${id}`);
   }
   return (
     <>
@@ -34,15 +35,13 @@ export default function ExploreFoods() {
             By Nationality
           </button>
         </Link>
-        <Link to={ `/foods/:${id}` }>
-          <button
-            type="button"
-            data-testid="explore-surprise"
-            onClick={ getIDFoodRandom }
-          >
-            Surprise me!
-          </button>
-        </Link>
+        <button
+          type="button"
+          data-testid="explore-surprise"
+          onClick={ getIDFoodRandom }
+        >
+          Surprise me!
+        </button>
       </main>
       <Footer />
     </>
