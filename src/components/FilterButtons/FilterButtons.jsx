@@ -6,6 +6,7 @@ export default function FilterButtons({ stgName, fetchFunction }) {
     <button
       type="button"
       data-testid={ `${stgName}-category-filter` }
+      value={ stgName }
       onClick={ () => fetchFunction(stgName) }
     >
       { stgName }

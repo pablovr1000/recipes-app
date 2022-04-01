@@ -11,7 +11,7 @@ import FoodCardsFromFilter from
 
 export default function Foods() {
   const { recipeResults,
-    isSearchBarInputClicked,
+    // isSearchBarInputClicked,
     setIsSearchBarInputClicked,
     isAnyFilterClicked,
     foodsAndDrinksByFilter,
@@ -40,7 +40,7 @@ export default function Foods() {
     <>
       <Header />
       {
-        chosenMealsCategories.map((category) => (
+        chosenMealsCategories.map((category) => ( // botões
           <FilterButtons
             key={ category }
             stgName={ category }
@@ -51,7 +51,7 @@ export default function Foods() {
       <h1>Foods</h1>
       {
         isAnyFilterClicked && (
-          foodsAndDrinksByFilter.map(({ strMeal, idMeal, strMealThumb }, index) => (
+          foodsAndDrinksByFilter.map(({ strMeal, idMeal, strMealThumb }, index) => ( // array que vem do clique do filtro
             <FoodCardsFromFilter
               mealId={ index }
               key={ idMeal }
@@ -62,8 +62,8 @@ export default function Foods() {
         )
       }
       {
-        !isAnyFilterClicked && (
-          foodsToRender.map(({ idMeal, strMeal, strMealThumb }, index) => (
+        isAnyFilterClicked && (
+          foodsToRender.map(({ idMeal, strMeal, strMealThumb }, index) => ( // array que vem da search bar
             <RecipeCard
               key={ idMeal }
               recipeName={ strMeal }
@@ -72,8 +72,8 @@ export default function Foods() {
             />)))
       }
       {
-        !isSearchBarInputClicked && (
-          mealsArray.map(({ strMeal, strMealThumb }, index) => (
+        !isAnyFilterClicked && (
+          mealsArray.map(({ strMeal, strMealThumb }, index) => ( // array padrão
             <RecipeCard
               key={ strMeal }
               recipeName={ strMeal }
