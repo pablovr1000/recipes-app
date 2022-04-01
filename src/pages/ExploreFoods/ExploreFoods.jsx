@@ -5,6 +5,7 @@ import Header from '../../components/Header/Header';
 
 export default function ExploreFoods() {
   const [id, setID] = useState();
+
   async function getIDFoodRandom() {
     const url = 'https://www.themealdb.com/api/json/v1/1/random.php';
     const response = await fetch(url);
