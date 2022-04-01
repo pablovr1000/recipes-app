@@ -1,15 +1,14 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-// import recipesContext from '../../context/recipesContext';
+import recipesContext from '../../context/recipesContext';
 import { getFoodDetails, getDrinkDetails } from '../../services/API';
 import RecipeCard from '../RecipeCard/RecipeCard';
 import './RecipeDetails.scss';
 
-export default function RecipeDetails({ id, page, recommendations }) { // ID 52771 food | drinks 178319
+export default function RecipeDetails({ id, page }) { // ID 52771 food | drinks 178319
   const [recipeToRender, setRecipeToRender] = useState({});
-  // const { recommendations, setRecommendations } = useContext(recipesContext);
-  /* const [isDisabled, setIsDisabled] = useState(false); */
+  const { recommendations } = useContext(recipesContext);
 
   useEffect(() => {
     (async () => {
@@ -22,11 +21,6 @@ export default function RecipeDetails({ id, page, recommendations }) { // ID 527
       setRecipeToRender(drink);
     })();
   }, [id, page]);
-
-  // useMemo(async () => {
-  //   const recommendationsToRender = await getRecommendations();
-  //   setRecommendations(recommendationsToRender);
-  // }, [setRecommendations]);
 
   const ingredientsAndMeasures = useMemo(() => {
     const ingredients = Object.entries(recipeToRender)
@@ -41,14 +35,6 @@ export default function RecipeDetails({ id, page, recommendations }) { // ID 527
 
     return { ingredients, measures };
   }, [recipeToRender]);
-
-  /* const handleSubmit = () => {
-    const idRecipe = recipe.idMeal || recipe.idDrink;
-    localStorage.setItem('user', JSON.stringify({
-      recipe.idMeal
-    }));
-    history.push('/foods');
-  }; */
 
   return (
     <div>
@@ -89,9 +75,8 @@ export default function RecipeDetails({ id, page, recommendations }) { // ID 527
       <div
         className="recommendation-container"
       >
-        {console.log(page, recommendations[0])}
         {
-          recommendations.map((recipe, index) => (
+          recommendations[page]?.map((recipe, index) => (
             <RecipeCard
               key={ recipe.idMeal || recipe.idDrink }
               type="recommendation"

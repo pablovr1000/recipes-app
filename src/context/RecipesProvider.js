@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import recipesContext from './recipesContext';
-import { getFoods, getDrinks } from '../services/API';
+import { getFoods, getDrinks, getRecommendations } from '../services/API';
+import { x } from '../utils/constants';
 
 function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
-  const [recommendations, setRecommendations] = useState({});
+  const [recommendations, setRecommendations] = useState(x);
+
+  useEffect(() => {
+    (async () => {
+      const recommendationsResults = await getRecommendations();
+      console.log(recommendationsResults);
+      // setRecommendations(recommendationsResults);
+    })();
+  }, []);
 
   const getRecipes = async (page, search, option) => {
     let data = [];
