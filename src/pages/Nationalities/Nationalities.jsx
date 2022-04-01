@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../../components/BottomMenu/Footer';
 import Header from '../../components/Header/Header';
 
 export default function Nationalities() {
@@ -6,6 +7,7 @@ export default function Nationalities() {
     <>
       <Header />
       <div>Nationalities</div>
+      <Footer />
     </>
   );
 }
