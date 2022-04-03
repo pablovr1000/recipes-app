@@ -28,16 +28,6 @@ function RecipesProvider({ children }) {
     } else {
       setFilterClicked('');
     }
-    // if (!target.classList.contains('selected')) {
-    //   target.parentNode.childNodes.forEach((child) => {
-    //     child.classList.remove('selected');
-    //   });
-    //   target.classList.add('selected');
-    //   setIsAnyFilterSelected(true);
-    // } else {
-    //   target.classList.remove('selected');
-    //   setIsAnyFilterSelected(false);
-    // }
   };
 
   const getMealsAndDrinksByFilter = async ({ target }) => {
