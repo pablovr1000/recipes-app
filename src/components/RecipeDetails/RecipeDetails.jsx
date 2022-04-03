@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 
 import recipesContext from '../../context/recipesContext';
 import { getFoodDetails, getDrinkDetails } from '../../services/API';
 import RecipeCard from '../RecipeCard/RecipeCard';
+import shareIcon from '../../images/shareIcon.svg';
 import './RecipeDetails.scss';
 
 export default function RecipeDetails({ id, page }) { // ID 52771 food | drinks 178319
   const [recipeToRender, setRecipeToRender] = useState({});
+  const [shareMessage, setShareMessage] = useState(false);
   const { recommendations,
     storageDoneRecipes,
     storageInProgressRecipes } = useContext(recipesContext);
@@ -52,6 +55,13 @@ export default function RecipeDetails({ id, page }) { // ID 52771 food | drinks 
     history.push(`/${page}/${id}/in-progress`);
   };
 
+  const handleShareRecipe = () => {
+    const THREE_SECONDS = 3000;
+    copy(`http://localhost:3000/${page}/${id}`);
+    setShareMessage(true);
+    setTimeout(() => setShareMessage(false), THREE_SECONDS);
+  };
+
   return (
     <div>
       <img
@@ -65,8 +75,15 @@ export default function RecipeDetails({ id, page }) { // ID 52771 food | drinks 
       >
         {recipeToRender.strMeal || recipeToRender.strDrink}
       </h1>
-      <button type="button" data-testid="share-btn">Compartilhar</button>
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ handleShareRecipe }
+      >
+        <img src={ shareIcon } alt="Share" />
+      </button>
       <button type="button" data-testid="favorite-btn">Favoritar</button>
+      { shareMessage && <p>Link copied!</p> }
       <p data-testid="recipe-category">
         {page === 'drinks' ? recipeToRender.strAlcoholic : recipeToRender.strCategory}
       </p>
