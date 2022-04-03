@@ -9,8 +9,18 @@ import './RecipeDetails.scss';
 
 export default function RecipeDetails({ id, page }) { // ID 52771 food | drinks 178319
   const [recipeToRender, setRecipeToRender] = useState({});
-  const { recommendations } = useContext(recipesContext);
+  const { recommendations,
+    storageDoneRecipes,
+    storageInProgressRecipes } = useContext(recipesContext);
   const history = useHistory();
+
+  const { isRecipeDone, isRecipeInProgress } = useMemo(() => {
+    const convertPageToKey = { drinks: 'cocktails', foods: 'meals' };
+    const recipeDone = storageDoneRecipes.some((recipe) => recipe.id === id);
+    const recipeInProgress = storageInProgressRecipes?.[convertPageToKey[page]]?.[id];
+
+    return { isRecipeDone: recipeDone, isRecipeInProgress: recipeInProgress };
+  }, [storageDoneRecipes, storageInProgressRecipes, id, page]);
 
   useEffect(() => {
     (async () => {
@@ -92,15 +102,16 @@ export default function RecipeDetails({ id, page }) { // ID 52771 food | drinks 
             />))
         }
       </div>
-      <button
-        className="startRecipeBtn"
-        type="button"
-        data-testid="start-recipe-btn"
-        onClick={ handleStartRecipe }
-        /* disabled={ isDisabled } */
-      >
-        Start Recipe
-      </button>
+      {!isRecipeDone && (
+        <button
+          className="startRecipeBtn"
+          type="button"
+          data-testid="start-recipe-btn"
+          onClick={ handleStartRecipe }
+        // disabled={ isDisabled }
+        >
+          { isRecipeInProgress ? 'Continue Recipe' : 'Start Recipe' }
+        </button>)}
     </div>
   );
 }

@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 
 import recipesContext from './recipesContext';
 import { getFoods, getDrinks, getRecommendations } from '../services/API';
+import useLocalStorage from '../utils/hooks';
 
 function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
   const [recommendations, setRecommendations] = useState({});
+  const [storageDoneRecipes, setStorageDoneRecipes] = useLocalStorage('doneRecipes', []);
+  const [storageInProgressRecipes,
+    setStorageInProgressRecipes] = useLocalStorage('inProgressRecipes', {});
 
   useEffect(() => {
     (async () => {
@@ -23,7 +27,17 @@ function RecipesProvider({ children }) {
     setRecipeResults(data);
   };
 
-  const values = { recipeResults, getRecipes, recommendations, setRecommendations };
+  const values = {
+    recipeResults,
+    getRecipes,
+    recommendations,
+    setRecommendations,
+    storageDoneRecipes,
+    setStorageDoneRecipes,
+    storageInProgressRecipes,
+    setStorageInProgressRecipes,
+  };
+
   return (
     <recipesContext.Provider value={ values }>
       {children}
