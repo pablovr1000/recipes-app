@@ -3,17 +3,15 @@ import PropTypes from 'prop-types';
 
 import recipesContext from './recipesContext';
 import { getFoods, getDrinks, getRecommendations } from '../services/API';
-import { x } from '../utils/constants';
 
 function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
-  const [recommendations, setRecommendations] = useState(x);
+  const [recommendations, setRecommendations] = useState({});
 
   useEffect(() => {
     (async () => {
       const recommendationsResults = await getRecommendations();
-      console.log(recommendationsResults);
-      // setRecommendations(recommendationsResults);
+      setRecommendations(recommendationsResults);
     })();
   }, []);
 

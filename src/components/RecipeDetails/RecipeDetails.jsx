@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import recipesContext from '../../context/recipesContext';
@@ -9,6 +10,7 @@ import './RecipeDetails.scss';
 export default function RecipeDetails({ id, page }) { // ID 52771 food | drinks 178319
   const [recipeToRender, setRecipeToRender] = useState({});
   const { recommendations } = useContext(recipesContext);
+  const history = useHistory();
 
   useEffect(() => {
     (async () => {
@@ -35,6 +37,10 @@ export default function RecipeDetails({ id, page }) { // ID 52771 food | drinks 
 
     return { ingredients, measures };
   }, [recipeToRender]);
+
+  const handleStartRecipe = () => {
+    history.push(`/${page}/${id}/in-progress`);
+  };
 
   return (
     <div>
@@ -90,7 +96,7 @@ export default function RecipeDetails({ id, page }) { // ID 52771 food | drinks 
         className="startRecipeBtn"
         type="button"
         data-testid="start-recipe-btn"
-        /* onClick={ handleSubmit } */
+        onClick={ handleStartRecipe }
         /* disabled={ isDisabled } */
       >
         Start Recipe

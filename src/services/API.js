@@ -35,7 +35,7 @@ export const getRecommendations = async () => {
   const { meals } = await responseFoods.json();
 
   const recommendations = {
-    foods: drinks.splice(0, RECOMMENDATION_RENDER_QUANTITY),
-    drinks: meals.splice(0, RECOMMENDATION_RENDER_QUANTITY) };
+    foods: [...drinks].splice(0, RECOMMENDATION_RENDER_QUANTITY),
+    drinks: [...meals].splice(0, RECOMMENDATION_RENDER_QUANTITY) };
   return recommendations;
 };
