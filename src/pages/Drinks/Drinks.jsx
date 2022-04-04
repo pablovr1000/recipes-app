@@ -7,8 +7,8 @@ import { RECIPES_RENDER_QUANTITY,
 from '../../utils/constants';
 import Header from '../../components/Header/Header';
 import FilterButtons from '../../components/FilterButtons/FilterButtons';
-import DrinksCardsFromFilter from
-'../../components/FoodCardsFromFilter/DrinksCardsFromFilter';
+import AllCategoriesButton
+from '../../components/AllCategoriesButton/AllCategoriesButton';
 
 export default function Drinks() {
   const { recipeResults,
@@ -17,17 +17,20 @@ export default function Drinks() {
     filterClicked,
     foodsAndDrinksByFilter,
     getMealsAndDrinksByFilter,
+    getAllCategories,
+    isAllClicked,
+    allFoods,
   } = useContext(recipesContext);
 
   const [recipesToRender, setRecipesToRender] = useState([]);
   const [drinksArray, setDrinksArray] = useState([]);
+  const [renderDrinkCard, setRenderDrinkCard] = useState([]);
 
   useEffect(() => {
     const getDrinks = async () => {
       const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const { drinks } = await response.json();
       setDrinksArray(Object.values(drinks).splice(0, RECIPES_RENDER_QUANTITY));
-      setIsSearchBarInputClicked(false);
     };
     getDrinks();
   }, [setIsSearchBarInputClicked]);
@@ -38,49 +41,50 @@ export default function Drinks() {
     }
   }, [recipeResults]);
 
+  useEffect(() => {
+    if (isAllClicked) setRenderDrinkCard(allFoods);
+    if (filterClicked) setRenderDrinkCard(foodsAndDrinksByFilter);
+    if (isSearchBarInputClicked) setRenderDrinkCard(recipesToRender);
+    if (!filterClicked && !isSearchBarInputClicked) setRenderDrinkCard(drinksArray);
+  }, [isAllClicked,
+    filterClicked,
+    allFoods,
+    foodsAndDrinksByFilter,
+    isSearchBarInputClicked,
+    recipesToRender,
+    drinksArray,
+  ]);
+
   return (
     <>
       <Header />
-      {
-        chosenDrinksCategories.map((category) => (
-          <FilterButtons
-            fetchFunction={ getMealsAndDrinksByFilter }
-            key={ category }
-            stgName={ category }
-          />
-        ))
-      }
-      {
-        filterClicked && (
-          foodsAndDrinksByFilter.map(({ strDrink, idDrink, strDrinkThumb }, index) => (
-            <DrinksCardsFromFilter
-              drinkId={ index }
-              key={ idDrink }
-              drinKname={ strDrink }
-              drinkLink={ strDrinkThumb }
+      <section>
+        {
+          chosenDrinksCategories.map((category) => ( // todos botões
+            <FilterButtons
+              fetchFunction={ getMealsAndDrinksByFilter }
+              key={ category }
+              stgName={ category }
             />
           ))
-        )
-      }
-      { !filterClicked && (
-        recipesToRender.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
-          <RecipeCard
-            key={ idDrink }
-            recipeName={ strDrink }
-            recipeImg={ strDrinkThumb }
-            recipeIndex={ index }
-          />))) }
-      {
-        !isSearchBarInputClicked && (
-          drinksArray.map((el, index) => (
+        }
+        <AllCategoriesButton // botão All
+          categories={ drinksArray }
+          fetchFunction={ getAllCategories }
+        />
+      </section>
+      <main>
+        {
+          renderDrinkCard.map(({ strDrink, idDrink, strDrinkThumb }, index) => (
             <RecipeCard
-              key={ el.idDrink }
-              recipeName={ el.strDrink }
-              recipeImg={ el.strDrinkThumb }
               recipeIndex={ index }
-            />))
-        )
-      }
+              key={ idDrink }
+              recipeName={ strDrink }
+              recipeImg={ strDrinkThumb }
+            />
+          ))
+        }
+      </main>
     </>
   );
 }

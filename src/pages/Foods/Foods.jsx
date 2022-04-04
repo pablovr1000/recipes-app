@@ -6,8 +6,8 @@ import { RECIPES_RENDER_QUANTITY,
 } from '../../utils/constants';
 import Header from '../../components/Header/Header';
 import FilterButtons from '../../components/FilterButtons/FilterButtons';
-import FoodCardsFromFilter from
-'../../components/FoodCardsFromFilter/FoodCardsFromFilter';
+import AllCategoriesButton
+from '../../components/AllCategoriesButton/AllCategoriesButton';
 
 export default function Foods() {
   const { recipeResults,
@@ -16,9 +16,14 @@ export default function Foods() {
     filterClicked,
     foodsAndDrinksByFilter,
     getMealsAndDrinksByFilter,
+    getAllCategories,
+    isAllClicked,
+    allFoods,
   } = useContext(recipesContext);
+
   const [foodsToRender, setFoodsToRender] = useState([]);
   const [mealsArray, setMealsArray] = useState([]);
+  const [renderFoodCard, setRenderFoodCard] = useState([]);
 
   useEffect(() => {
     const getFoods = async () => {
@@ -35,6 +40,22 @@ export default function Foods() {
     }
   }, [recipeResults]);
 
+  useEffect(() => {
+    if (isAllClicked) setRenderFoodCard(allFoods);
+    if (filterClicked) setRenderFoodCard(foodsAndDrinksByFilter);
+    if (isSearchBarInputClicked) setRenderFoodCard(foodsToRender);
+    if (!filterClicked
+      && !isSearchBarInputClicked
+      && !isAllClicked) setRenderFoodCard(mealsArray);
+  }, [isAllClicked,
+    filterClicked,
+    allFoods,
+    foodsAndDrinksByFilter,
+    renderFoodCard,
+    foodsToRender,
+    isSearchBarInputClicked,
+    mealsArray]);
+
   return (
     <>
       <Header />
@@ -48,40 +69,23 @@ export default function Foods() {
             />
           ))
         }
+        <AllCategoriesButton // botão All
+          categories={ mealsArray }
+          fetchFunction={ getAllCategories }
+        />
       </section>
-      {
-        filterClicked && (
-          foodsAndDrinksByFilter.map(({ strMeal, idMeal, strMealThumb }, index) => ( // array que vem do clique do filtro
-            <FoodCardsFromFilter
-              mealId={ index }
+      <main>
+        {
+          renderFoodCard.map(({ strMeal, idMeal, strMealThumb }, index) => (
+            <RecipeCard
+              recipeIndex={ index }
               key={ idMeal }
-              mealName={ strMeal }
-              imageLink={ strMealThumb }
+              recipeName={ strMeal }
+              recipeImg={ strMealThumb }
             />
           ))
-        )
-      }
-      {
-        isSearchBarInputClicked && (
-          foodsToRender.map(({ idMeal, strMeal, strMealThumb }, index) => ( // array que vem da search bar
-            <RecipeCard
-              key={ idMeal }
-              recipeName={ strMeal }
-              recipeImg={ strMealThumb }
-              recipeIndex={ index }
-            />)))
-      }
-      {
-        (!filterClicked && !isSearchBarInputClicked) && (
-          mealsArray.map(({ strMeal, strMealThumb }, index) => ( // array padrão
-            <RecipeCard
-              key={ strMeal }
-              recipeName={ strMeal }
-              recipeImg={ strMealThumb }
-              recipeIndex={ index }
-            />))
-        )
-      }
+        }
+      </main>
     </>
   );
 }

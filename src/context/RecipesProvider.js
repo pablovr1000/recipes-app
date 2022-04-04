@@ -14,6 +14,8 @@ function RecipesProvider({ children }) {
   const [isSearchBarInputClicked, setIsSearchBarInputClicked] = useState(false);
   const [filterClicked, setFilterClicked] = useState('');
   const [foodsAndDrinksByFilter, setFoodsAndDrinksByFilter] = useState([]);
+  const [allFoods, setAllFoods] = useState([]);
+  const [isAllClicked, setIsAllClicked] = useState(false);
 
   const getRecipes = async (page, search, option) => {
     let data = [];
@@ -22,11 +24,16 @@ function RecipesProvider({ children }) {
 
     setRecipeResults(data);
   };
+
   const renderingConditionals = (target) => {
     if (filterClicked === '' || filterClicked !== target.value) {
       setFilterClicked(target.value);
+      setIsAllClicked(false);
+      setIsSearchBarInputClicked(false);
     } else {
       setFilterClicked('');
+      setIsAllClicked(false);
+      setIsSearchBarInputClicked(false);
     }
   };
 
@@ -41,6 +48,20 @@ function RecipesProvider({ children }) {
     setFoodsAndDrinksByFilter(data);
     renderingConditionals(target);
   };
+  const allRenderingConditional = () => {
+    if (isAllClicked) {
+      setFilterClicked('');
+      setIsSearchBarInputClicked(false);
+    }
+  };
+
+  const getAllCategories = async (allCategories) => {
+    setAllFoods(allCategories);
+    setIsAllClicked(true);
+    setIsSearchBarInputClicked(false);
+    setFilterClicked('');
+    allRenderingConditional();
+  };
 
   return (
     <recipesContext.Provider
@@ -54,7 +75,10 @@ function RecipesProvider({ children }) {
           getMealsAndDrinksByFilter,
           filterClicked,
           foodsAndDrinksByFilter,
-          setFilterClicked }
+          setFilterClicked,
+          getAllCategories,
+          allFoods,
+          isAllClicked }
       }
     >
       {children}
