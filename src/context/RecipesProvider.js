@@ -8,6 +8,7 @@ import useLocalStorage from '../utils/hooks';
 function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
   const [recommendations, setRecommendations] = useState({});
+  const [userData, setUserData] = useLocalStorage('user', {});
   const [storageDoneRecipes, setStorageDoneRecipes] = useLocalStorage('doneRecipes', []);
   const [storageInProgressRecipes,
     setStorageInProgressRecipes] = useLocalStorage('inProgressRecipes', {});
@@ -29,6 +30,8 @@ function RecipesProvider({ children }) {
 
   const values = {
     recipeResults,
+    userData,
+    setUserData,
     getRecipes,
     recommendations,
     setRecommendations,
