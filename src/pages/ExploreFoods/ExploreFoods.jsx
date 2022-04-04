@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import Footer from '../../components/BottomMenu/Footer';
 import Header from '../../components/Header/Header';
+import { getIDFoodRandom } from '../../services/API';
 
 export default function ExploreFoods() {
   const history = useHistory();
 
-  async function getIDFoodRandom() {
-    const url = 'https://www.themealdb.com/api/json/v1/1/random.php';
-    const response = await fetch(url);
-    const data = await response.json();
-    const id = (data.meals[0].idMeal);
+  const redirectToFoodsRandom = async () => {
+    const id = await getIDFoodRandom();
     history.push(`/foods/${id}`);
-  }
+  };
+
   return (
     <>
       <Header />
@@ -38,7 +37,7 @@ export default function ExploreFoods() {
         <button
           type="button"
           data-testid="explore-surprise"
-          onClick={ getIDFoodRandom }
+          onClick={ redirectToFoodsRandom }
         >
           Surprise me!
         </button>

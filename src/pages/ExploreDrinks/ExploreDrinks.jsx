@@ -3,18 +3,15 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import Footer from '../../components/BottomMenu/Footer';
 import Header from '../../components/Header/Header';
+import { getIdDrinksRandom } from '../../services/API';
 
 export default function ExploreDrinks() {
   const history = useHistory();
 
-  async function getIdDrinksRandom() {
-    const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data.drinks[0].idDrink);
-    const idDrinks = data.drinks[0].idDrink;
+  const redirectToDrinksRandom = async () => {
+    const idDrinks = await getIdDrinksRandom();
     history.push(`/drinks/${idDrinks}`);
-  }
+  };
 
   return (
     <>
@@ -29,15 +26,13 @@ export default function ExploreDrinks() {
             By Ingredient
           </button>
         </Link>
-
         <button
           type="button"
           data-testid="explore-surprise"
-          onClick={ getIdDrinksRandom }
+          onClick={ redirectToDrinksRandom }
         >
           Surprise me!
         </button>
-
       </main>
       <Footer />
     </>
