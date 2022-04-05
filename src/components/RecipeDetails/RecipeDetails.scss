@@ -1,0 +1,22 @@
+.recommendation-container {
+  background-color: #333;
+  overflow: auto;
+  white-space: nowrap;
+
+  div {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 10px 10px 10px 0;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #777;
+    }
+  }
+}
+
+.startRecipeBtn {
+  position: fixed;
+  bottom: 0;
+}

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import recipesContext from '../../context/recipesContext';
 
 export default function Login() {
   const history = useHistory();
+  const { setUserData } = useContext(recipesContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
@@ -20,7 +22,7 @@ export default function Login() {
   }, [email, password]);
 
   const handleSubmit = () => {
-    localStorage.setItem('user', JSON.stringify({ email }));
+    setUserData({ email });
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
     history.push('/foods');

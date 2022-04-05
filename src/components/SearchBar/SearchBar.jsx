@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import recipesContext from '../../context/recipesContext';
 import { INITIAL_SEARCH_OPTIONS } from '../../utils/constants';
@@ -9,10 +9,11 @@ export default function SearchBar() {
   const [currentPage, setCurrentPage] = useState('');
   const [redirectToId, setRedirectToId] = useState('');
   const { recipeResults, getRecipes } = useContext(recipesContext);
+  const history = useHistory();
 
   useEffect(() => {
-    setCurrentPage(window.location.href.split('/').pop());
-  }, []);
+    setCurrentPage(history.location.pathname.split('/')[1]);
+  }, [history]);
 
   useEffect(() => {
     if (!recipeResults) {
@@ -21,7 +22,6 @@ export default function SearchBar() {
     }
 
     if (recipeResults.length === 1) {
-      console.log('entrou');
       setRedirectToId(recipeResults[0].idMeal || recipeResults[0].idDrink);
     }
   }, [recipeResults]);
@@ -54,7 +54,7 @@ export default function SearchBar() {
           type="text"
           data-testid="search-input"
           onChange={ handleChangeInputSearch }
-          value={ searchOptions.input }
+          value={ searchOptions.search }
         />
         <label htmlFor="ingredient-search">
           <input

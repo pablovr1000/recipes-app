@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import recipesContext from './recipesContext';
-import { getFoods, getDrinks } from '../services/API';
+import { getFoods, getDrinks, getRecommendations } from '../services/API';
+import useLocalStorage from '../utils/hooks';
 
 function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
+  const [recommendations, setRecommendations] = useState({});
+  const [userData, setUserData] = useLocalStorage('user', {});
+  const [storageDoneRecipes, setStorageDoneRecipes] = useLocalStorage('doneRecipes', []);
+  const [storageInProgressRecipes,
+    setStorageInProgressRecipes] = useLocalStorage('inProgressRecipes', {});
+  const [storageFavoriteRecipes,
+    setStorageFavoriteRecipes] = useLocalStorage('favoriteRecipes', []);
+
+  useEffect(() => {
+    (async () => {
+      const recommendationsResults = await getRecommendations();
+      setRecommendations(recommendationsResults);
+    })();
+  }, []);
 
   const getRecipes = async (page, search, option) => {
     let data = [];
@@ -15,8 +30,23 @@ function RecipesProvider({ children }) {
     setRecipeResults(data);
   };
 
+  const values = {
+    recipeResults,
+    userData,
+    setUserData,
+    getRecipes,
+    recommendations,
+    setRecommendations,
+    storageDoneRecipes,
+    setStorageDoneRecipes,
+    storageInProgressRecipes,
+    setStorageInProgressRecipes,
+    storageFavoriteRecipes,
+    setStorageFavoriteRecipes,
+  };
+
   return (
-    <recipesContext.Provider value={ { recipeResults, getRecipes } }>
+    <recipesContext.Provider value={ values }>
       {children}
     </recipesContext.Provider>
   );
