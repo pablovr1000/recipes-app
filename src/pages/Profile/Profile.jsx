@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import recipesContext from '../../context/recipesContext';
+
+import Footer from '../../components/BottomMenu/Footer';
 import Header from '../../components/Header/Header';
 
 export default function Profile() {
@@ -38,6 +40,8 @@ export default function Profile() {
       >
         Logout
       </button>
+      <Footer />
     </div>
+    </>
   );
 }
