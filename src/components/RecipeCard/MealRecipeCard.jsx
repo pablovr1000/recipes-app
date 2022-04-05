@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export default function RecipeCard({
+export default function MealRecipeCard({
   recipeName,
   recipeImg,
   recipeId,
@@ -21,7 +21,7 @@ export default function RecipeCard({
   );
 }
 
-RecipeCard.propTypes = {
+MealRecipeCard.propTypes = {
   recipeName: PropTypes.string,
   recipeImg: PropTypes.string,
   index: PropTypes.number,

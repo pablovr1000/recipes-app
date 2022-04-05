@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import recipesContext from '../../context/recipesContext';
-import RecipeCard from '../../components/RecipeCard/RecipeCard';
+import MealRecipeCard from '../../components/RecipeCard/MealRecipeCard';
 import { RECIPES_RENDER_QUANTITY,
   chosenMealsCategories,
 } from '../../utils/constants';
@@ -77,7 +77,7 @@ export default function Foods() {
       <main>
         {
           renderFoodCard.map(({ strMeal, idMeal, strMealThumb }, index) => (
-            <RecipeCard
+            <MealRecipeCard
               recipeIndex={ index }
               key={ idMeal }
               recipeName={ strMeal }
