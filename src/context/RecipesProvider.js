@@ -11,6 +11,8 @@ function RecipesProvider({ children }) {
   const [storageDoneRecipes, setStorageDoneRecipes] = useLocalStorage('doneRecipes', []);
   const [storageInProgressRecipes,
     setStorageInProgressRecipes] = useLocalStorage('inProgressRecipes', {});
+  const [storageFavoriteRecipes,
+    setStorageFavoriteRecipes] = useLocalStorage('favoriteRecipes', []);
 
   useEffect(() => {
     (async () => {
@@ -36,6 +38,8 @@ function RecipesProvider({ children }) {
     setStorageDoneRecipes,
     storageInProgressRecipes,
     setStorageInProgressRecipes,
+    storageFavoriteRecipes,
+    setStorageFavoriteRecipes,
   };
 
   return (
