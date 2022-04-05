@@ -42,6 +42,5 @@ export default function Profile() {
       </button>
       <Footer />
     </div>
-    </>
   );
 }
