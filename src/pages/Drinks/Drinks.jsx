@@ -81,6 +81,7 @@ export default function Drinks() {
               key={ idDrink }
               recipeName={ strDrink }
               recipeImg={ strDrinkThumb }
+              recipeId={ idDrink }
             />
           ))
         }

@@ -82,6 +82,7 @@ export default function Foods() {
               key={ idMeal }
               recipeName={ strMeal }
               recipeImg={ strMealThumb }
+              recipeId={ idMeal }
             />
           ))
         }
