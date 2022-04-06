@@ -27,3 +27,4 @@ export const getDrinkByCategory = async (category) => {
   const { drinks } = await response.json();
   return Object.values(drinks).splice(0, CATEGORIES_MAX_LENGTH);
 };
+//
