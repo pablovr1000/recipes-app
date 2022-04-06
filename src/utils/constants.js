@@ -1,5 +1,7 @@
 export const RECIPES_RENDER_QUANTITY = 12;
 
+export const MEALS_CATEGORIES_QUANTITY = 5;
+
 export const RECOMMENDATION_RENDER_QUANTITY = 6;
 
 export const INITIAL_SEARCH_OPTIONS = { search: '', option: 'i' };
@@ -17,3 +19,19 @@ export const headerTitles = {
   favorite_recipes: 'Favorite Recipes',
   profile: 'Profile',
 };
+
+export const chosenMealsCategories = [
+  'Breakfast',
+  'Chicken',
+  'Goat',
+  'Dessert',
+  'Beef',
+];
+
+export const chosenDrinksCategories = [
+  'Ordinary Drink',
+  'Cocktail',
+  'Cocoa',
+  'Milk / Float / Shake',
+  'Other/Unknown',
+];

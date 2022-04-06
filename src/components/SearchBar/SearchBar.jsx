@@ -1,19 +1,27 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
-
 import recipesContext from '../../context/recipesContext';
+
 import { INITIAL_SEARCH_OPTIONS } from '../../utils/constants';
 
 export default function SearchBar() {
   const [searchOptions, setSearchOptions] = useState(INITIAL_SEARCH_OPTIONS);
-  const [currentPage, setCurrentPage] = useState('');
   const [redirectToId, setRedirectToId] = useState('');
-  const { recipeResults, getRecipes } = useContext(recipesContext);
+  const {
+    recipeResults,
+    getRecipes,
+    currentPage,
+    setCurrentPage,
+    setIsSearchBarInputClicked,
+    filterClicked,
+    setFilterClicked,
+  } = useContext(recipesContext);
+
   const history = useHistory();
 
   useEffect(() => {
     setCurrentPage(history.location.pathname.split('/')[1]);
-  }, [history]);
+  }, [history, setCurrentPage]);
 
   useEffect(() => {
     if (!recipeResults) {
@@ -36,6 +44,11 @@ export default function SearchBar() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (filterClicked !== '') {
+      setFilterClicked('');
+    }
+    setIsSearchBarInputClicked(true);
+
     const { search, option } = searchOptions;
 
     if (option === 'f' && search.length !== 1) {
