@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
 import recipesContext from './recipesContext';
+
+import useLocalStorage from '../utils/hooks';
+import { chosenMealsCategories, chosenDrinksCategories } from '../utils/constants';
 import { getFoods,
   getDrinks,
   getFoodByCategory,
-  getDrinkByCategory } from '../services/API';
-import { chosenMealsCategories, chosenDrinksCategories } from '../utils/constants';
+  getDrinkByCategory,
+  getRecommendations } from '../services/API';
 
 function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
-  const [currentPage, setCurrentPage] = useState('');
   const [isSearchBarInputClicked, setIsSearchBarInputClicked] = useState(false);
   const [filterClicked, setFilterClicked] = useState('');
   const [foodsAndDrinksByFilter, setFoodsAndDrinksByFilter] = useState([]);
   const [allFoods, setAllFoods] = useState([]);
   const [isAllClicked, setIsAllClicked] = useState(false);
+  const [currentPage, setCurrentPage] = useState('');
+  const [recommendations, setRecommendations] = useState({});
+  const [userData, setUserData] = useLocalStorage('user', {});
+  const [storageDoneRecipes, setStorageDoneRecipes] = useLocalStorage('doneRecipes', []);
+  const [storageInProgressRecipes,
+    setStorageInProgressRecipes] = useLocalStorage('inProgressRecipes', {});
+  const [storageFavoriteRecipes,
+    setStorageFavoriteRecipes] = useLocalStorage('favoriteRecipes', []);
+
+  useEffect(() => {
+    (async () => {
+      const recommendationsResults = await getRecommendations();
+      setRecommendations(recommendationsResults);
+    })();
+  }, []);
 
   const getRecipes = async (page, search, option) => {
     let data = [];
@@ -64,24 +80,34 @@ function RecipesProvider({ children }) {
     allRenderingConditional();
   };
 
+  const values = {
+    recipeResults,
+    userData,
+    setUserData,
+    recommendations,
+    setRecommendations,
+    getRecipes,
+    setCurrentPage,
+    currentPage,
+    isSearchBarInputClicked,
+    setIsSearchBarInputClicked,
+    getMealsAndDrinksByFilter,
+    filterClicked,
+    foodsAndDrinksByFilter,
+    setFilterClicked,
+    getAllCategories,
+    allFoods,
+    isAllClicked
+    storageDoneRecipes,
+    setStorageDoneRecipes,
+    storageInProgressRecipes,
+    setStorageInProgressRecipes,
+    storageFavoriteRecipes,
+    setStorageFavoriteRecipes,
+  };
+
   return (
-    <recipesContext.Provider
-      value={
-        { recipeResults,
-          getRecipes,
-          setCurrentPage,
-          currentPage,
-          isSearchBarInputClicked,
-          setIsSearchBarInputClicked,
-          getMealsAndDrinksByFilter,
-          filterClicked,
-          foodsAndDrinksByFilter,
-          setFilterClicked,
-          getAllCategories,
-          allFoods,
-          isAllClicked }
-      }
-    >
+    <recipesContext.Provider value={ values }>
       {children}
     </recipesContext.Provider>
   );

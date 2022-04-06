@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import recipesContext from '../../context/recipesContext';
+
 import { INITIAL_SEARCH_OPTIONS } from '../../utils/constants';
 
 export default function SearchBar() {
@@ -14,11 +15,14 @@ export default function SearchBar() {
     setIsSearchBarInputClicked,
     filterClicked,
     setFilterClicked,
+    recipeResults,
   } = useContext(recipesContext);
+  
+  const history = useHistory();
 
   useEffect(() => {
-    setCurrentPage(window.location.href.split('/').pop());
-  }, [setCurrentPage]);
+    setCurrentPage(history.location.pathname.split('/')[1]);
+  }, [history]);
 
   useEffect(() => {
     if (!recipeResults) {

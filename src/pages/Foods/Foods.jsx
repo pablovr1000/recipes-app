@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import recipesContext from '../../context/recipesContext';
-import RecipeCard from '../../components/RecipeCard/RecipeCard';
-import { RECIPES_RENDER_QUANTITY,
-  chosenMealsCategories,
-} from '../../utils/constants';
+
 import Header from '../../components/Header/Header';
+import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import FilterButtons from '../../components/FilterButtons/FilterButtons';
 import AllCategoriesButton
 from '../../components/AllCategoriesButton/AllCategoriesButton';
+import Footer from '../../components/BottomMenu/Footer';
+import { RECIPES_RENDER_QUANTITY,
+  chosenMealsCategories,
+} from '../../utils/constants';
 
 export default function Foods() {
   const { recipeResults,
@@ -88,6 +90,7 @@ export default function Foods() {
           ))
         }
       </main>
+      <Footer />
     </>
   );
 }

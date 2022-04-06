@@ -2,20 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export default function RecipeCard({
-  recipeName,
-  recipeImg,
-  recipeId,
-  recipeIndex, page }) {
+import './RecipeCard.scss';
+
+export default function RecipeCard({ type, recipeName, recipeImg, recipeIndex, page, recipeId }) {
   return (
     <Link to={ `/${page}/${recipeId}` }>
-      <div data-testid={ `${recipeIndex}-recipe-card` }>
+      <div
+        className="recipe-card-container"
+        data-testid={
+          type ? `${recipeIndex}-recomendation-card` : `${recipeIndex}-recipe-card`
+        }
+      >
         <img
           data-testid={ `${recipeIndex}-card-img` }
           src={ recipeImg }
           alt={ recipeName }
         />
-        <p data-testid={ `${recipeIndex}-card-name` }>{recipeName}</p>
+        <p
+          data-testid={
+            type ? `${recipeIndex}-recomendation-title` : `${recipeIndex}-card-name`
+          }
+        >
+          {recipeName}
+        </p>
       </div>
     </Link>
   );
