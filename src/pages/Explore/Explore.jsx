@@ -5,7 +5,9 @@ export default function Explore() {
   return (
     <>
       <Header />
-      <div>Explore</div>
+      <select>
+        {/* <option data-testid="explore-by-nationality-dropdown"></option> */}
+      </select>
     </>
   );
 }

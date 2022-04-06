@@ -27,4 +27,11 @@ export const getDrinkByCategory = async (category) => {
   const { drinks } = await response.json();
   return Object.values(drinks).splice(0, CATEGORIES_MAX_LENGTH);
 };
-// a
+
+export const getByNationality = async () => {
+  const CATEGORIES_MAX_LENGTH = 12;
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
+  const { meals } = await response.json();
+  console.log(meals);
+};
+console.log(getByNationality());
