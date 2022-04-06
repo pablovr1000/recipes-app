@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
+import SearchBar from '../SearchBar/SearchBar';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import { headerTitles } from '../../utils/constants';
-import SearchBar from '../SearchBar/SearchBar';
 
 export default function Header() {
   const [isSearchBarBtnVisible, setIsSearchBarBtnVisible] = useState(false);

@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 import './RecipeCard.scss';
 
-export default function RecipeCard({ type, recipeName, recipeImg, recipeIndex, page, recipeId }) {
+export default function RecipeCard({
+  type, recipeName, recipeImg, recipeIndex, page, recipeId }) {
   return (
     <Link to={ `/${page}/${recipeId}` }>
       <div

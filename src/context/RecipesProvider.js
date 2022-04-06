@@ -97,7 +97,7 @@ function RecipesProvider({ children }) {
     setFilterClicked,
     getAllCategories,
     allFoods,
-    isAllClicked
+    isAllClicked,
     storageDoneRecipes,
     setStorageDoneRecipes,
     storageInProgressRecipes,

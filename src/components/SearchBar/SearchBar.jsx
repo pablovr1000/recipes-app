@@ -15,14 +15,13 @@ export default function SearchBar() {
     setIsSearchBarInputClicked,
     filterClicked,
     setFilterClicked,
-    recipeResults,
   } = useContext(recipesContext);
-  
+
   const history = useHistory();
 
   useEffect(() => {
     setCurrentPage(history.location.pathname.split('/')[1]);
-  }, [history]);
+  }, [history, setCurrentPage]);
 
   useEffect(() => {
     if (!recipeResults) {
