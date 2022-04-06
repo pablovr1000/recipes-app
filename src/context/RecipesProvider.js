@@ -48,6 +48,7 @@ function RecipesProvider({ children }) {
     setFoodsAndDrinksByFilter(data);
     renderingConditionals(target);
   };
+
   const allRenderingConditional = () => {
     if (isAllClicked) {
       setFilterClicked('');
@@ -55,7 +56,7 @@ function RecipesProvider({ children }) {
     }
   };
 
-  const getAllCategories = async (allCategories) => {
+  const getAllCategories = (allCategories) => {
     setAllFoods(allCategories);
     setIsAllClicked(true);
     setIsSearchBarInputClicked(false);

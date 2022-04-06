@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export default function MealRecipeCard({
+export default function RecipeCard({
   recipeName,
   recipeImg,
   recipeId,
-  recipeIndex }) {
+  recipeIndex, page }) {
   return (
-    <Link to={ `/foods/${recipeId}` }>
+    <Link to={ `/${page}/${recipeId}` }>
       <div data-testid={ `${recipeIndex}-recipe-card` }>
         <img
           data-testid={ `${recipeIndex}-card-img` }
@@ -21,7 +21,7 @@ export default function MealRecipeCard({
   );
 }
 
-MealRecipeCard.propTypes = {
+RecipeCard.propTypes = {
   recipeName: PropTypes.string,
   recipeImg: PropTypes.string,
   index: PropTypes.number,
