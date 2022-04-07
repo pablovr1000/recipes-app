@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Header from '../../components/Header/Header';
-import Footer from '../../components/BottomMenu/Footer';
+import Footer from '../../components/Footer/Footer';
 import IngredientCard from '../../components/IngredientCard/IngredientCard';
 import { getIngredientsList } from '../../services/API';
 

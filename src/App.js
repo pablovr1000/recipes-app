@@ -29,7 +29,12 @@ function App() {
       <Route
         exact
         path="/explore/foods/nationalities"
-        component={ pages.Nationalities }
+        component={ pages.FoodsNationalities }
+      />
+      <Route
+        exact
+        path="/explore/drinks/nationalities"
+        component={ pages.DrinksNationalities }
       />
       <Route exact path="/profile" component={ pages.Profile } />
       <Route exact path="/done-recipes" component={ pages.DoneRecipes } />
