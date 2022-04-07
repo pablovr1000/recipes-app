@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import { getFoods,
+  getDrinks,
+  getFoodByCategory,
+  getDrinkByCategory, getRecommendations } from '../services/API';
+import { chosenMealsCategories, chosenDrinksCategories } from '../utils/constants';
 import recipesContext from './recipesContext';
-import { getFoods, getDrinks, getRecommendations } from '../services/API';
 import useLocalStorage from '../utils/hooks';
 
-function RecipesProvider({ children }) {
+export default function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
   const [recommendations, setRecommendations] = useState({});
   const [userData, setUserData] = useLocalStorage('user', {});
@@ -14,6 +17,12 @@ function RecipesProvider({ children }) {
     setStorageInProgressRecipes] = useLocalStorage('inProgressRecipes', {});
   const [storageFavoriteRecipes,
     setStorageFavoriteRecipes] = useLocalStorage('favoriteRecipes', []);
+  const [currentPage, setCurrentPage] = useState('');
+  const [isSearchBarInputClicked, setIsSearchBarInputClicked] = useState(false);
+  const [filterClicked, setFilterClicked] = useState('');
+  const [foodsAndDrinksByFilter, setFoodsAndDrinksByFilter] = useState([]);
+  const [allFoods, setAllFoods] = useState([]);
+  const [isAllClicked, setIsAllClicked] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -30,6 +39,26 @@ function RecipesProvider({ children }) {
     setRecipeResults(data);
   };
 
+  const renderingConditionals = (target) => {
+    if (filterClicked === '' || filterClicked !== target.value) {
+      setFilterClicked(target.value);
+    } else {
+      setFilterClicked('');
+    }
+  };
+
+  const getMealsAndDrinksByFilter = async ({ target }) => {
+    let data = [];
+    if (chosenMealsCategories.includes(target.value)) {
+      data = await getFoodByCategory(target.value);
+    }
+    if (chosenDrinksCategories.includes(target.value)) {
+      data = await getDrinkByCategory(target.value);
+    }
+    setFoodsAndDrinksByFilter(data);
+    renderingConditionals(target);
+  };
+
   const values = {
     recipeResults,
     userData,
@@ -43,6 +72,16 @@ function RecipesProvider({ children }) {
     setStorageInProgressRecipes,
     storageFavoriteRecipes,
     setStorageFavoriteRecipes,
+    getMealsAndDrinksByFilter,
+    isSearchBarInputClicked,
+    setIsSearchBarInputClicked,
+    currentPage,
+    setCurrentPage,
+    foodsAndDrinksByFilter,
+    allFoods,
+    setAllFoods,
+    isAllClicked,
+    setIsAllClicked,
   };
 
   return (
@@ -51,9 +90,6 @@ function RecipesProvider({ children }) {
     </recipesContext.Provider>
   );
 }
-
-export default RecipesProvider;
-
 RecipesProvider.propTypes = {
   children: PropTypes.object,
 }.isRequired;

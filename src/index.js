@@ -7,11 +7,13 @@ import * as serviceWorker from './serviceWorker';
 import RecipesProvider from './context/RecipesProvider';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <RecipesProvider>
-      <App />
-    </RecipesProvider>
-  </BrowserRouter>,
+  <React.StrictMode>
+    <BrowserRouter>
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
   document.getElementById('root'),
 );
 
