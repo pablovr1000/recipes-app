@@ -1,4 +1,5 @@
-import { RECOMMENDATION_RENDER_QUANTITY } from '../utils/constants';
+import { INGREDIENTS_RENDER_QUANTITY,
+  RECOMMENDATION_RENDER_QUANTITY } from '../utils/constants';
 
 export const getFoodByCategory = async (category) => {
   const doze = 12;
@@ -68,8 +69,15 @@ export const getIDFoodRandom = async () => {
   return id;
 };
 
+export const getIngredientsList = async (page) => {
+  const API_URL = page === 'foods' ? 'themealdb' : 'thecocktaildb';
+  const response = await fetch(`https://www.${API_URL}.com/api/json/v1/1/list.php?i=list`);
+  const data = await response.json();
+  const ingredients = data.drinks || data.meals;
+  return ingredients.slice(0, INGREDIENTS_RENDER_QUANTITY);
+};
+
 export const getByNationality = async () => {
-  // const CATEGORIES_MAX_LENGTH = 12;
   const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
   const { meals } = await response.json();
   return meals;
