@@ -64,7 +64,7 @@ export default function Drinks() {
         {
           chosenDrinksCategories.map((category) => ( // todos botões
             <FilterButtons
-              fetchFunction={ getMealsAndDrinksByFilter }
+              fetchFunction={ (filter) => getMealsAndDrinksByFilter(filter) }
               key={ category }
               stgName={ category }
             />

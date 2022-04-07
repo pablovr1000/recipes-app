@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import recipesContext from './recipesContext';
 
 import useLocalStorage from '../utils/hooks';
-import { chosenMealsCategories, chosenDrinksCategories } from '../utils/constants';
+import { chosenMealsCategories, chosenDrinksCategories,
+  RECIPES_RENDER_QUANTITY } from '../utils/constants';
 import { getFoods,
   getDrinks,
   getFoodByCategory,
@@ -41,9 +42,9 @@ function RecipesProvider({ children }) {
     setRecipeResults(data);
   };
 
-  const renderingConditionals = (target) => {
-    if (filterClicked === '' || filterClicked !== target.value) {
-      setFilterClicked(target.value);
+  const renderingConditionals = (filter) => {
+    if (filterClicked === '' || filterClicked !== filter) {
+      setFilterClicked(filter);
       setIsAllClicked(false);
       setIsSearchBarInputClicked(false);
     } else {
@@ -53,16 +54,27 @@ function RecipesProvider({ children }) {
     }
   };
 
-  const getMealsAndDrinksByFilter = async ({ target }) => {
+  const getMealsAndDrinksByFilter = async (filter) => {
     let data = [];
-    if (chosenMealsCategories.includes(target.value)) {
-      data = await getFoodByCategory(target.value);
+    if (chosenMealsCategories.includes(filter)) {
+      data = await getFoodByCategory(filter);
     }
-    if (chosenDrinksCategories.includes(target.value)) {
-      data = await getDrinkByCategory(target.value);
+    if (chosenDrinksCategories.includes(filter)) {
+      data = await getDrinkByCategory(filter);
     }
     setFoodsAndDrinksByFilter(data);
-    renderingConditionals(target);
+    renderingConditionals(filter);
+  };
+
+  const getMealsAndDrinksByIngredient = async (ingredient, page) => {
+    let data = [];
+    if (page === 'foods') {
+      data = await getFoods(ingredient, 'i');
+    } else {
+      data = await getDrinks(ingredient, 'i');
+    }
+    setFoodsAndDrinksByFilter(data.slice(0, RECIPES_RENDER_QUANTITY));
+    renderingConditionals(ingredient);
   };
 
   const allRenderingConditional = () => {
@@ -92,6 +104,7 @@ function RecipesProvider({ children }) {
     isSearchBarInputClicked,
     setIsSearchBarInputClicked,
     getMealsAndDrinksByFilter,
+    getMealsAndDrinksByIngredient,
     filterClicked,
     foodsAndDrinksByFilter,
     setFilterClicked,

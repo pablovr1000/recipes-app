@@ -67,7 +67,7 @@ export default function Foods() {
             <FilterButtons
               key={ category }
               stgName={ category }
-              fetchFunction={ getMealsAndDrinksByFilter }
+              fetchFunction={ (filter) => getMealsAndDrinksByFilter(filter) }
             />
           ))
         }
