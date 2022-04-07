@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { getByNationality, standardArray } from '../../services/API';
 import NationalityCard from '../NationalityCard/NationalityCard';
 
-export default function ExploreFoodsAndDrinks({ page }) {
+export default function ExploreFoodsAndDrinks() {
   const [nationalities, setNationalities] = useState([]);
   const [selectValue, setSelectValue] = useState('');
   const [recipesToRender, setRecipesToRender] = useState([]);
@@ -12,16 +11,17 @@ export default function ExploreFoodsAndDrinks({ page }) {
     (async () => {
       const getByNationalityFunc = await getByNationality();
       setNationalities(getByNationalityFunc);
-      if (page === 'foods') {
-        setRecipesToRender(await standardArray());
-      }
-      // if (page === 'drinks') {
-
-      // }
+      setRecipesToRender(await standardArray());
     })();
-  }, [setNationalities, page]);
+  }, [setNationalities]);
 
   const requestNationality = async ({ target }) => {
+    if (target.value === 'All') {
+      setSelectValue('All');
+      const allMeals = await standardArray();
+      setRecipesToRender(allMeals);
+      return;
+    }
     setSelectValue(target.value);
     const CATEGORIES_MAX_LENGTH = 12;
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${target.value}`);
@@ -47,6 +47,7 @@ export default function ExploreFoodsAndDrinks({ page }) {
             </option>
           ))
         }
+        <option data-testid="All-option" key="All">All</option>
       </select>
       {
         recipesToRender.map(({ idMeal, strMeal, strMealThumb }, index) => (
@@ -61,7 +62,3 @@ export default function ExploreFoodsAndDrinks({ page }) {
     </section>
   );
 }
-
-ExploreFoodsAndDrinks.propTypes = {
-  pages: PropTypes.string,
-}.isRequerid;

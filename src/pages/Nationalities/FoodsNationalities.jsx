@@ -9,7 +9,7 @@ export default function FoodsNationalities() {
     <>
       <Header />
       <div>Foods Nationalities</div>
-      <ExploreFoodsAndDrinks page="foods" />
+      <ExploreFoodsAndDrinks />
       <Footer />
     </>
   );
