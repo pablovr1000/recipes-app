@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import { headerTitles } from '../../utils/constants';
@@ -9,7 +9,6 @@ export default function Header() {
   const [isSearchBarBtnVisible, setIsSearchBarBtnVisible] = useState(false);
   const [urlParam, setUrlParam] = useState('');
   const [isBloomClicked, setIsBloomClicked] = useState(false);
-  const history = useHistory();
 
   const toggleSearchInput = () => {
     setIsBloomClicked((prevState) => (!prevState));
@@ -19,14 +18,15 @@ export default function Header() {
     const searchBarButtonPages = ['Drinks', 'Foods', 'Explore Nationalities'];
     if (searchBarButtonPages.includes(urlParam)) setIsSearchBarBtnVisible(true);
 
-    let url = history.location.pathname.split('/')[1];
+    const titleFromUrl = 3;
+    let url = window.location.href.split('/').splice(titleFromUrl).join('_');
 
     if (url === 'done-recipes' || url === 'favorite-recipes') {
       url = url.replace('-', '_');
     }
 
     setUrlParam(headerTitles[url]);
-  }, [urlParam, history]);
+  }, [urlParam]);
 
   return (
     <header>

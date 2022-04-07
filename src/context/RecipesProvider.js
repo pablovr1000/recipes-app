@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import recipesContext from './recipesContext';
+
+import useLocalStorage from '../utils/hooks';
+import { chosenMealsCategories, chosenDrinksCategories } from '../utils/constants';
 import { getFoods,
   getDrinks,
   getFoodByCategory,
-  getDrinkByCategory, getRecommendations } from '../services/API';
-import { chosenMealsCategories, chosenDrinksCategories } from '../utils/constants';
-import recipesContext from './recipesContext';
-import useLocalStorage from '../utils/hooks';
+  getDrinkByCategory,
+  getRecommendations } from '../services/API';
 
-export default function RecipesProvider({ children }) {
+function RecipesProvider({ children }) {
   const [recipeResults, setRecipeResults] = useState([]);
+  const [isSearchBarInputClicked, setIsSearchBarInputClicked] = useState(false);
+  const [filterClicked, setFilterClicked] = useState('');
+  const [foodsAndDrinksByFilter, setFoodsAndDrinksByFilter] = useState([]);
+  const [allFoods, setAllFoods] = useState([]);
+  const [isAllClicked, setIsAllClicked] = useState(false);
+  const [currentPage, setCurrentPage] = useState('');
   const [recommendations, setRecommendations] = useState({});
   const [userData, setUserData] = useLocalStorage('user', {});
   const [storageDoneRecipes, setStorageDoneRecipes] = useLocalStorage('doneRecipes', []);
@@ -17,12 +25,6 @@ export default function RecipesProvider({ children }) {
     setStorageInProgressRecipes] = useLocalStorage('inProgressRecipes', {});
   const [storageFavoriteRecipes,
     setStorageFavoriteRecipes] = useLocalStorage('favoriteRecipes', []);
-  const [currentPage, setCurrentPage] = useState('');
-  const [isSearchBarInputClicked, setIsSearchBarInputClicked] = useState(false);
-  const [filterClicked, setFilterClicked] = useState('');
-  const [foodsAndDrinksByFilter, setFoodsAndDrinksByFilter] = useState([]);
-  const [allFoods, setAllFoods] = useState([]);
-  const [isAllClicked, setIsAllClicked] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -42,8 +44,12 @@ export default function RecipesProvider({ children }) {
   const renderingConditionals = (target) => {
     if (filterClicked === '' || filterClicked !== target.value) {
       setFilterClicked(target.value);
+      setIsAllClicked(false);
+      setIsSearchBarInputClicked(false);
     } else {
       setFilterClicked('');
+      setIsAllClicked(false);
+      setIsSearchBarInputClicked(false);
     }
   };
 
@@ -59,29 +65,45 @@ export default function RecipesProvider({ children }) {
     renderingConditionals(target);
   };
 
+  const allRenderingConditional = () => {
+    if (isAllClicked) {
+      setFilterClicked('');
+      setIsSearchBarInputClicked(false);
+    }
+  };
+
+  const getAllCategories = (allCategories) => {
+    setAllFoods(allCategories);
+    setIsAllClicked(true);
+    setIsSearchBarInputClicked(false);
+    setFilterClicked('');
+    allRenderingConditional();
+  };
+
   const values = {
     recipeResults,
     userData,
     setUserData,
-    getRecipes,
     recommendations,
     setRecommendations,
+    getRecipes,
+    setCurrentPage,
+    currentPage,
+    isSearchBarInputClicked,
+    setIsSearchBarInputClicked,
+    getMealsAndDrinksByFilter,
+    filterClicked,
+    foodsAndDrinksByFilter,
+    setFilterClicked,
+    getAllCategories,
+    allFoods,
+    isAllClicked,
     storageDoneRecipes,
     setStorageDoneRecipes,
     storageInProgressRecipes,
     setStorageInProgressRecipes,
     storageFavoriteRecipes,
     setStorageFavoriteRecipes,
-    getMealsAndDrinksByFilter,
-    isSearchBarInputClicked,
-    setIsSearchBarInputClicked,
-    currentPage,
-    setCurrentPage,
-    foodsAndDrinksByFilter,
-    allFoods,
-    setAllFoods,
-    isAllClicked,
-    setIsAllClicked,
   };
 
   return (
@@ -90,6 +112,9 @@ export default function RecipesProvider({ children }) {
     </recipesContext.Provider>
   );
 }
+
+export default RecipesProvider;
+
 RecipesProvider.propTypes = {
   children: PropTypes.object,
 }.isRequired;

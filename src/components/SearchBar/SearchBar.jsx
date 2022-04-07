@@ -1,24 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-<<<<<<< HEAD
 import { Redirect, useHistory } from 'react-router-dom';
-
-=======
-import { Redirect } from 'react-router-dom';
->>>>>>> 4fb4bc0abe6ae4ec3e4f5a6d0d61653685e5187a
 import recipesContext from '../../context/recipesContext';
+
 import { INITIAL_SEARCH_OPTIONS } from '../../utils/constants';
 
 export default function SearchBar() {
   const [searchOptions, setSearchOptions] = useState(INITIAL_SEARCH_OPTIONS);
   const [redirectToId, setRedirectToId] = useState('');
-<<<<<<< HEAD
-  const { recipeResults, getRecipes } = useContext(recipesContext);
-  const history = useHistory();
-
-  useEffect(() => {
-    setCurrentPage(history.location.pathname.split('/')[1]);
-  }, [history]);
-=======
   const {
     recipeResults,
     getRecipes,
@@ -29,10 +17,11 @@ export default function SearchBar() {
     setFilterClicked,
   } = useContext(recipesContext);
 
+  const history = useHistory();
+
   useEffect(() => {
-    setCurrentPage(window.location.href.split('/').pop());
-  }, [setCurrentPage]);
->>>>>>> 4fb4bc0abe6ae4ec3e4f5a6d0d61653685e5187a
+    setCurrentPage(history.location.pathname.split('/')[1]);
+  }, [history, setCurrentPage]);
 
   useEffect(() => {
     if (!recipeResults) {

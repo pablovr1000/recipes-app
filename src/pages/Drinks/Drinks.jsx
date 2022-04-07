@@ -1,18 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import recipesContext from '../../context/recipesContext';
+
+import Header from '../../components/Header/Header';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
+import FilterButtons from '../../components/FilterButtons/FilterButtons';
+import AllCategoriesButton
+from '../../components/AllCategoriesButton/AllCategoriesButton';
+import Footer from '../../components/Footer/Footer';
 import { RECIPES_RENDER_QUANTITY,
   chosenDrinksCategories,
 }
 from '../../utils/constants';
-import Header from '../../components/Header/Header';
-<<<<<<< HEAD
-import Footer from '../../components/Footer/Footer';
-=======
-import FilterButtons from '../../components/FilterButtons/FilterButtons';
-import AllCategoriesButton
-from '../../components/AllCategoriesButton/AllCategoriesButton';
->>>>>>> 4fb4bc0abe6ae4ec3e4f5a6d0d61653685e5187a
 
 export default function Drinks() {
   const { recipeResults,
@@ -62,17 +60,6 @@ export default function Drinks() {
   return (
     <>
       <Header />
-<<<<<<< HEAD
-      <div>Drinks</div>
-      { recipesToRender.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
-        <RecipeCard
-          key={ idDrink }
-          recipeName={ strDrink }
-          recipeImg={ strDrinkThumb }
-          recipeIndex={ index }
-        />)) }
-      <Footer />
-=======
       <section>
         {
           chosenDrinksCategories.map((category) => ( // todos botões
@@ -102,7 +89,7 @@ export default function Drinks() {
           ))
         }
       </main>
->>>>>>> 4fb4bc0abe6ae4ec3e4f5a6d0d61653685e5187a
+      <Footer />
     </>
   );
 }
