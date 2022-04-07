@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import Footer from '../../components/BottomMenu/Footer';
+import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import { getIDFoodRandom } from '../../services/API';
 

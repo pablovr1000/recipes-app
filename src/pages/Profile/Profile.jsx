@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import recipesContext from '../../context/recipesContext';
 
-import Footer from '../../components/BottomMenu/Footer';
+import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 
 export default function Profile() {
