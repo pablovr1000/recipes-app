@@ -10,7 +10,8 @@ import ExploreFoods from './ExploreFoods/ExploreFoods';
 import ExploreDrinks from './ExploreDrinks/ExploreDrinks';
 import FoodsIngredients from './FoodsIngredients/FoodsIngredients';
 import DrinksIngredients from './DrinksIngredients/DrinksIngredients';
-import Nationalities from './Nationalities/Nationalities';
+import FoodsNationalities from './Nationalities/FoodsNationalities';
+import DrinksNationalities from './Nationalities/DrinksNationalities';
 import Profile from './Profile/Profile';
 import DoneRecipes from './DoneRecipes/DoneRecipes';
 import FavoriteRecipes from './FavoriteRecipes/FavoriteRecipes';
@@ -28,7 +29,8 @@ const pages = {
   ExploreDrinks,
   FoodsIngredients,
   DrinksIngredients,
-  Nationalities,
+  FoodsNationalities,
+  DrinksNationalities,
   Profile,
   FavoriteRecipes,
   DoneRecipes,
