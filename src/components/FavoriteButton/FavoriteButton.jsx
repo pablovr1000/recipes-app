@@ -5,7 +5,13 @@ import recipesContext from '../../context/recipesContext';
 import notFavoriteIcon from '../../images/whiteHeartIcon.svg';
 import isFavoriteIcon from '../../images/blackHeartIcon.svg';
 
-export default function FavoriteButton({ isFavorite, id, page, recipeToRender }) {
+export default function FavoriteButton({
+  isFavorite,
+  id,
+  page,
+  recipeToRender,
+  dataTestId,
+}) {
   const { setStorageFavoriteRecipes,
     storageFavoriteRecipes } = useContext(recipesContext);
 
@@ -33,7 +39,7 @@ export default function FavoriteButton({ isFavorite, id, page, recipeToRender })
     >
       <img
         src={ isFavorite ? isFavoriteIcon : notFavoriteIcon }
-        data-testid="favorite-btn"
+        data-testid={ dataTestId }
         alt="Favorite"
       />
     </button>
@@ -45,4 +51,6 @@ FavoriteButton.propTypes = {
   recipeToRender: PropTypes.object,
   id: PropTypes.string,
   page: PropTypes.string,
+  dataTestId: PropTypes.string,
 }.isRequired;
+// criar um estado que vai salvar array

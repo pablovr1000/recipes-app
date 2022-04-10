@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
+import { Link } from 'react-router-dom';
 import shareIcon from '../../images/shareIcon.svg';
 import FavoriteButton from '../FavoriteButton/FavoriteButton';
 import recipesContext from '../../context/recipesContext';
@@ -55,17 +56,21 @@ export default function FavoriteRecipesCard({
       <h2 data-testid={ `${recipeIndex}-horizontal-top-text` }>
         { type === 'drink' ? alcoholicOrNot : `${nationality} - ${category}` }
       </h2>
-      <p data-testid={ `${recipeIndex}-horizontal-name` }>
-        {name}
-      </p>
+      <Link to={ `/${type === 'food' ? 'foods' : 'drinks'}/${recipeId}` }>
+        <p data-testid={ `${recipeIndex}-horizontal-name` }>
+          {name}
+        </p>
+      </Link>
       <p>{ `Nacionalidade: ${nationality}` }</p>
       <p>{ `Categoria: ${category}` }</p>
-      <img
-        data-testid={ `${recipeIndex}-horizontal-image` }
-        src={ imageSrc }
-        alt={ name }
-        width="40%"
-      />
+      <Link to={ `/${type === 'food' ? 'foods' : 'drinks'}/${recipeId}` }>
+        <img
+          data-testid={ `${recipeIndex}-horizontal-image` }
+          src={ imageSrc }
+          alt={ name }
+          width="40%"
+        />
+      </Link>
       <button
         type="button"
         onClick={ handleShareRecipe }
@@ -81,7 +86,7 @@ export default function FavoriteRecipesCard({
         recipeToRender={ recipeToRender }
         id={ recipeId }
         page={ type }
-        testId={ `${recipeIndex}-horizontal-favorite-btn` }
+        dataTestId={ `${recipeIndex}-horizontal-favorite-btn` }
       />
     </div>
   );

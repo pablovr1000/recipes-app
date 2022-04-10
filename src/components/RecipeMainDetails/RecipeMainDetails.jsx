@@ -77,6 +77,7 @@ export default function RecipeMainDetails({ id, page }) {
         recipeToRender={ recipeToRender }
         id={ id }
         page={ page }
+        dataTestId="favorite-btn"
       />
       { shareMessage && <p>Link copied!</p> }
       <p data-testid="recipe-category">

@@ -1,27 +1,56 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Header from '../../components/Header/Header';
 import FavoriteRecipesCard
 from '../../components/FavoriteRecipesCard/FavoriteRecipesCard';
 import recipesContext from '../../context/recipesContext';
 
 export default function FavoriteRecipes() {
-  const [storedFavRecipes, setStoredRecipes] = useState([]);
   const { storageFavoriteRecipes } = useContext(recipesContext);
+  const [recipesToRender, setRecipesToRender] = useState(storageFavoriteRecipes);
+
+  const conditionalRenderins = (filterName) => {
+    if (filterName === '') {
+      setRecipesToRender(storageFavoriteRecipes);
+      return;
+    }
+    setRecipesToRender(storageFavoriteRecipes.filter(({ type }) => type === filterName));
+  };
 
   useEffect(() => {
-    setStoredRecipes(storageFavoriteRecipes);
+    setRecipesToRender(storageFavoriteRecipes);
   }, [storageFavoriteRecipes]);
 
   return (
     <>
       <Header />
       <div>
-        <button type="button" data-testid="filter-by-all-btn">All</button>
-        <button type="button" data-testid="filter-by-food-btn">Food</button>
-        <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
+        <button
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ () => conditionalRenderins('') }
+        >
+          All
+
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-food-btn"
+          onClick={ () => conditionalRenderins('food') }
+        >
+          Food
+
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+          onClick={ () => conditionalRenderins('drink') }
+        >
+          Drinks
+
+        </button>
       </div>
       {
-        storedFavRecipes.map(({
+        recipesToRender.map(({
           type,
           nationality,
           category,
@@ -36,7 +65,7 @@ export default function FavoriteRecipes() {
               category={ category }
               name={ name }
               imageSrc={ image }
-              key={ name }
+              key={ id }
               recipeId={ id }
               recipeIndex={ index }
               alcoholicOrNot={ alcoholicOrNot }
